@@ -10,6 +10,10 @@
     {
       "source": "/membership/:path*", 
       "destination": "https://web-production-3bde6.up.railway.app/membership/:path*"
+    },
+    {
+      "source": "/audio/:path*",
+      "destination": "https://web-production-3bde6.up.railway.app/audio/:path*"
     }
   ],
   "headers": [

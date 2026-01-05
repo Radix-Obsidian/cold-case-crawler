@@ -52,10 +52,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     // ========== LOAD EPISODE DATA ==========
     async function loadEpisodeData() {
         try {
-            const response = await fetch('episode_data.json');
+            // First try to fetch from API (works with Vercel->Railway proxy)
+            let response = await fetch('/api/episode');
+            
+            // Fallback to static JSON if API fails
+            if (!response.ok) {
+                console.log('⚠️ API not available, trying static JSON...');
+                response = await fetch('episode_data.json');
+            }
+            
             if (response.ok) {
                 episodeData = await response.json();
                 visualCues = episodeData.visualCues || [];
+                
+                // Update audio source if API provided audioUrl
+                if (episodeData.audioUrl) {
+                    console.log(`🔊 Loading audio from: ${episodeData.audioUrl}`);
+                    audio.src = episodeData.audioUrl;
+                    audio.load();
+                } else {
+                    // Fallback: try to load from backend audio endpoint
+                    console.log('🔊 Using audio endpoint fallback');
+                    audio.src = '/audio/episode.mp3';
+                    audio.load();
+                }
                 
                 // Update UI with case info
                 if (episodeData.case) {
@@ -90,7 +110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return true;
             }
         } catch (e) {
-            console.log('⚠️ No episode_data.json found, using fallback');
+            console.log('⚠️ Failed to load episode data:', e);
         }
         
         // Fallback cues if no JSON

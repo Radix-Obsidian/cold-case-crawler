@@ -1,10 +1,12 @@
-from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import uvicorn
 import os
 import asyncio
+import json
 from typing import Optional
 
 # Import our services
@@ -93,6 +95,38 @@ async def generate_episode(request: CaseRequest, background_tasks: BackgroundTas
     """Start the generation process in the background."""
     background_tasks.add_task(generate_episode_task, request)
     return {"status": "processing", "message": "Investigative team dispatched. Analysis underway."}
+
+@app.get("/api/episode")
+async def get_episode(request: Request):
+    """Get current episode data with proper audio URL for frontend."""
+    # Determine the base URL for audio files
+    # Use the request's base URL so it works in any environment
+    base_url = str(request.base_url).rstrip('/')
+    
+    # Try to load episode_data.json
+    episode_path = "frontend/episode_data.json"
+    if os.path.exists(episode_path):
+        with open(episode_path, 'r') as f:
+            episode_data = json.load(f)
+    else:
+        episode_data = {
+            "case": {
+                "title": "No Episode Available",
+                "location": "Unknown",
+                "date": "Unknown"
+            },
+            "visualCues": []
+        }
+    
+    # Add the audio URL - use relative path since static files serve from frontend/
+    audio_file = "frontend/cold_case_episode.mp3"
+    if os.path.exists(audio_file):
+        # Audio is served from static files mount at /cold_case_episode.mp3
+        episode_data["audioUrl"] = f"{base_url}/cold_case_episode.mp3"
+    else:
+        episode_data["audioUrl"] = None
+    
+    return episode_data
 
 # Mount frontend files
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
