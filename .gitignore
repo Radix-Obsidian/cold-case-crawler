@@ -56,10 +56,12 @@ logs/
 Thumbs.db
 
 # Generated files
-*.mp3
+# Keep episode MP3 files for deployment
+# *.mp3
 *.wav
-cold_case_episode.mp3
-snippet_episode.mp3
+# Allow frontend MP3 for deployment
+# cold_case_episode.mp3
+# snippet_episode.mp3
 
 # Data files (keep examples)
 budget_data.json
