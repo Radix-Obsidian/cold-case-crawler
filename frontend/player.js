@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 } else {
                     // Fallback: try to load from backend audio endpoint
                     console.log('🔊 Using audio endpoint fallback');
-                    audio.src = '/audio/episode.mp3';
+                    audio.src = '/audio/cold_case_episode.mp3';
                     audio.load();
                 }
                 
