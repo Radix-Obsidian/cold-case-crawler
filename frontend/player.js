@@ -382,15 +382,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     // ========== INITIALIZE ==========
     await loadEpisodeData();
     
+    // Case panel toggle button
+    const casePanelToggleBtn = document.getElementById('casePanelToggleBtn');
+    
     // Show case panel after a delay
     setTimeout(() => {
         if (casePanel) casePanel.classList.add('visible');
     }, 1000);
     
-    // Panel toggle
+    // Close panel button (X)
     if (panelToggle) {
         panelToggle.addEventListener('click', () => {
             casePanel.classList.remove('visible');
+            // Show the floating toggle button after panel closes
+            setTimeout(() => {
+                if (casePanelToggleBtn) casePanelToggleBtn.classList.add('visible');
+            }, 300);
+        });
+    }
+    
+    // Open panel button (floating 📁)
+    if (casePanelToggleBtn) {
+        casePanelToggleBtn.addEventListener('click', () => {
+            casePanelToggleBtn.classList.remove('visible');
+            casePanel.classList.add('visible');
         });
     }
     
