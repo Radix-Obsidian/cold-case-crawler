@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "buildCommand": null,
+  "outputDirectory": "frontend",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://web-production-3bde6.up.railway.app/api/:path*"
+    },
+    {
+      "source": "/membership/:path*",
+      "destination": "https://web-production-3bde6.up.railway.app/membership/:path*"
+    },
+    {
+      "source": "/audio/:path*",
+      "destination": "https://web-production-3bde6.up.railway.app/audio/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" }
+      ]
+    }
+  ]
+}
