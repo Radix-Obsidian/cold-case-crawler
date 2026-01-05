@@ -118,17 +118,21 @@ async def get_episode(request: Request):
             "visualCues": []
         }
     
-    # Add the audio URL - use relative path since static files serve from frontend/
+    # Add the audio URL - use relative path that works through Vercel proxy
     audio_file = "frontend/cold_case_episode.mp3"
     if os.path.exists(audio_file):
-        # Audio is served from static files mount at /cold_case_episode.mp3
-        episode_data["audioUrl"] = f"{base_url}/cold_case_episode.mp3"
+        # Use relative path - Vercel will proxy /audio/* to Railway
+        episode_data["audioUrl"] = "/audio/cold_case_episode.mp3"
     else:
         episode_data["audioUrl"] = None
     
     return episode_data
 
-# Mount frontend files
+# Create audio directory symlink/copy for serving
+# Mount audio files at /audio path (more specific, takes precedence)
+app.mount("/audio", StaticFiles(directory="frontend"), name="audio")
+
+# Mount frontend files - MUST be last as it catches all routes
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
 
 if __name__ == "__main__":
