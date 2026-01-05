@@ -155,10 +155,10 @@ Generate your opening dialogue line as Maya Vance.
 """
             elif len(context) >= 28:  # Near the end (for 15 exchanges)
                 instruction = """
-You are CLOSING this episode of Dead Air. This is the OUTRO.
+You are CLOSING this episode of Murder Index. This is the OUTRO.
 - Summarize the key theories discussed
 - Thank listeners for joining
-- Remind them to subscribe and follow Dead Air for next week's case
+- Remind them to subscribe and follow Murder Index for next week's case
 - Sign off with warmth
 Generate your closing dialogue line as Maya Vance.
 """
