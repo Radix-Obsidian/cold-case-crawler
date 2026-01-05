@@ -1077,76 +1077,192 @@ body {
     display: none;
 }
 
-@media (max-width: 768px) {
-    .coming-soon-teaser {
-        bottom: auto;
-        top: 60px;
-        right: 10px;
-        left: 10px;
-        width: auto;
-    }
-}
+/* ========== MOBILE RESPONSIVE - Apple HIG Principles ========== */
+/* 
+ * Following Apple Human Interface Guidelines:
+ * - Minimum 44pt touch targets
+ * - Safe area insets for notch devices
+ * - Clear visual hierarchy
+ * - Reduce cognitive load
+ */
 
-/* ========== MOBILE RESPONSIVE ========== */
 @media (max-width: 768px) {
-    /* Header */
+    /* Safe area support for notch devices */
+    .app {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+    
+    /* ===== HEADER - Minimal, clean ===== */
     .site-header {
-        padding: 8px 12px;
+        padding: 12px 16px;
+        padding-top: max(12px, env(safe-area-inset-top));
+        background: rgba(10, 10, 12, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
     }
     
     .site-logo {
         height: 28px;
     }
     
+    /* Hide nav text, show icons only or hide completely */
     .site-nav {
-        gap: 12px;
+        gap: 16px;
     }
     
     .site-nav a {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
+        padding: 8px 0;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
     }
     
-    /* Visual Stage */
-    .text-overlay {
-        top: 60px;
-        bottom: 140px;
-        padding: 1rem;
+    /* ===== HIDE CLUTTER ON MOBILE ===== */
+    .membership-banner {
+        display: none !important;
+    }
+    
+    .timeline-bar {
+        display: none !important;
     }
     
     .location-stamp {
-        margin-bottom: 1rem;
+        display: none !important;
     }
     
-    .stamp-location {
-        font-size: 0.7rem;
-        padding: 0.4rem 1rem;
-        letter-spacing: 0.2em;
+    .case-panel {
+        display: none !important;
     }
     
-    .stamp-date {
-        font-size: 0.65rem;
+    .case-panel-toggle-btn {
+        display: none !important;
+    }
+    
+    .evidence-popup {
+        display: none !important;
+    }
+    
+    /* ===== COMING SOON TEASER - Top banner style ===== */
+    .coming-soon-teaser {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: auto;
+        width: 100%;
+        max-width: none;
+        border-radius: 0;
+        padding: 12px 16px;
+        padding-top: max(12px, calc(env(safe-area-inset-top) + 50px));
+        background: linear-gradient(to bottom, rgba(20, 20, 22, 0.98), rgba(20, 20, 22, 0.95));
+        border: none;
+        border-bottom: 1px solid var(--border);
+        z-index: 500;
+        animation: slideDown 0.3s ease;
+    }
+    
+    @keyframes slideDown {
+        from { transform: translateY(-100%); }
+        to { transform: translateY(0); }
+    }
+    
+    .teaser-glow {
+        display: none;
+    }
+    
+    .teaser-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .teaser-badge {
+        font-size: 0.6rem;
+        padding: 4px 8px;
+        align-self: flex-start;
+    }
+    
+    .teaser-title {
+        font-size: 1rem;
+        margin: 0;
+    }
+    
+    .teaser-desc {
+        font-size: 0.8rem;
+        margin: 0;
+        line-height: 1.4;
+    }
+    
+    .teaser-cta {
+        align-self: flex-start;
+        padding: 12px 20px;
+        min-height: 44px;
+        font-size: 0.85rem;
+    }
+    
+    .teaser-dismiss {
+        position: absolute;
+        top: max(12px, env(safe-area-inset-top));
+        right: 12px;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+    
+    /* ===== VISUAL STAGE - Full screen experience ===== */
+    .visual-stage {
+        padding-top: 60px;
+    }
+    
+    .text-overlay {
+        top: 50%;
+        bottom: auto;
+        left: 16px;
+        right: 16px;
+        transform: translateY(-50%);
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
     
     .dramatic-text {
-        font-size: clamp(1.1rem, 5vw, 1.8rem);
-        line-height: 1.4;
-        padding: 0 0.5rem;
+        font-size: clamp(1.1rem, 5vw, 1.5rem);
+        line-height: 1.5;
+        text-align: center;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 12px;
+        max-width: 100%;
     }
     
-    /* Speaker Cards - Stack vertically on mobile */
+    /* ===== SPEAKER CARDS - Compact, bottom positioned ===== */
     .speaker-display {
-        bottom: 80px;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0 1rem;
+        position: fixed;
+        bottom: 140px;
+        left: 16px;
+        right: 16px;
+        flex-direction: row;
+        justify-content: center;
+        gap: 8px;
+        padding: 0;
+        z-index: 50;
     }
     
     .speaker-card {
-        width: 100%;
-        max-width: 280px;
-        padding: 0.4rem 0.8rem 0.4rem 0.4rem;
-        gap: 0.5rem;
+        flex: 0 0 auto;
+        padding: 8px 12px;
+        gap: 8px;
+        border-radius: 24px;
+        max-width: 160px;
     }
     
     .speaker-card.maya,
@@ -1155,197 +1271,227 @@ body {
         flex-direction: row;
     }
     
+    .speaker-card.thorne {
+        flex-direction: row;
+    }
+    
     .speaker-card.thorne .speaker-info {
         text-align: left;
     }
     
     .speaker-card img {
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
     }
     
     .speaker-info .name {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+        white-space: nowrap;
     }
     
     .speaker-info .role {
-        font-size: 0.65rem;
+        display: none;
+    }
+    
+    .speaking-indicator {
+        display: none;
+    }
+    
+    /* Show indicator only when active */
+    .speaker-card.active .speaking-indicator {
+        display: flex;
+        margin-left: 4px;
     }
     
     .speaking-indicator span {
         width: 3px;
+        height: 12px;
     }
     
-    /* Timeline - Hide on mobile */
-    .timeline-bar {
-        display: none;
-    }
-    
-    /* Case Panel */
-    .case-panel {
-        top: auto;
+    /* ===== CONTROL BAR - Fixed bottom, Apple-style ===== */
+    .control-bar {
+        position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        width: 100%;
-        max-height: 50vh;
-        border-radius: 16px 16px 0 0;
-        transform: translateY(100%);
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 16px;
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+        background: rgba(20, 20, 22, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid var(--border);
+        z-index: 100;
     }
     
-    .case-panel.visible {
-        transform: translateY(0);
-    }
-    
-    .case-panel.collapsed {
-        transform: translateY(100%);
-    }
-    
-    .case-panel-toggle-btn {
-        top: auto;
-        bottom: 70px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    /* Control Bar */
-    .control-bar {
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        padding: 0.75rem 1rem;
-    }
-    
+    /* Case info - top row */
     .case-info {
         width: 100%;
-        min-width: auto;
-        order: -1;
         justify-content: center;
-        gap: 0.5rem;
+        gap: 8px;
+        min-width: auto;
+        order: 0;
     }
     
     .case-badge {
-        font-size: 0.55rem;
-        padding: 0.2rem 0.4rem;
+        font-size: 0.6rem;
+        padding: 4px 8px;
     }
     
     .case-title {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
+        max-width: 200px;
     }
     
-    .player-controls {
-        gap: 0.25rem;
-    }
-    
-    .ctrl-btn {
-        width: 36px;
-        height: 36px;
-    }
-    
-    .ctrl-btn svg {
-        width: 16px;
-        height: 16px;
-    }
-    
-    .play-btn {
-        width: 48px;
-        height: 48px;
-    }
-    
-    .play-btn svg {
-        width: 22px;
-        height: 22px;
-    }
-    
-    /* Progress Bar */
+    /* Progress - middle row */
     .progress-section {
-        flex: 1;
-        min-width: 100%;
+        width: 100%;
         order: 1;
     }
     
     .progress-container {
-        height: 6px;
+        height: 4px;
+        border-radius: 2px;
     }
     
     .time-display {
         font-size: 0.7rem;
     }
     
-    /* Volume - Hide on mobile */
-    .volume-section {
-        display: none;
+    /* Controls - bottom row, centered */
+    .player-controls {
+        order: 2;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
     }
     
-    /* Speed Selector */
-    .speed-btn {
-        font-size: 0.7rem;
-        padding: 0.3rem 0.6rem;
+    /* 44pt minimum touch targets */
+    .ctrl-btn {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
     }
     
-    /* Evidence Popup */
-    .evidence-popup {
-        left: 10px;
-        right: 10px;
-        bottom: auto;
-        top: 50%;
-        transform: translateY(-50%);
-        max-width: none;
-    }
-    
-    /* Coming Soon Teaser */
-    .coming-soon-teaser {
-        padding: 1rem;
-    }
-    
-    .teaser-title {
-        font-size: 1.1rem;
-    }
-    
-    .teaser-desc {
-        font-size: 0.8rem;
-    }
-}
-
-/* Extra small screens */
-@media (max-width: 480px) {
-    .site-header {
-        padding: 6px 10px;
-    }
-    
-    .site-logo {
-        height: 24px;
-    }
-    
-    .site-nav a {
-        font-size: 0.6rem;
-        letter-spacing: 0;
-    }
-    
-    .dramatic-text {
-        font-size: clamp(1rem, 5vw, 1.4rem);
-    }
-    
-    .speaker-card {
-        max-width: 240px;
-        padding: 0.3rem 0.6rem 0.3rem 0.3rem;
-    }
-    
-    .speaker-card img {
-        width: 32px;
-        height: 32px;
-    }
-    
-    .control-bar {
-        padding: 0.5rem 0.75rem;
+    .ctrl-btn svg {
+        width: 20px;
+        height: 20px;
     }
     
     .play-btn {
-        width: 44px;
-        height: 44px;
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+        min-height: 56px;
     }
     
-    .ctrl-btn {
-        width: 32px;
-        height: 32px;
+    .play-btn svg {
+        width: 24px;
+        height: 24px;
+    }
+    
+    /* Hide volume on mobile - use device volume */
+    .volume-section {
+        display: none !important;
+    }
+    
+    /* Speed button - accessible */
+    .speed-btn {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 8px 12px;
+        font-size: 0.75rem;
+    }
+}
+
+/* ===== EXTRA SMALL SCREENS (iPhone SE, etc) ===== */
+@media (max-width: 375px) {
+    .site-nav a {
+        font-size: 0.6rem;
+    }
+    
+    .dramatic-text {
+        font-size: 1rem;
+        padding: 16px;
+    }
+    
+    .speaker-card {
+        padding: 6px 10px;
+        max-width: 140px;
+    }
+    
+    .speaker-card img {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .speaker-info .name {
+        font-size: 0.7rem;
+    }
+    
+    .case-title {
+        font-size: 0.75rem;
+        max-width: 150px;
+    }
+    
+    .teaser-title {
+        font-size: 0.9rem;
+    }
+    
+    .teaser-desc {
+        font-size: 0.75rem;
+    }
+}
+
+/* ===== LANDSCAPE MODE ===== */
+@media (max-width: 768px) and (orientation: landscape) {
+    .coming-soon-teaser {
+        padding-top: 12px;
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .teaser-content {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+    }
+    
+    .teaser-badge {
+        margin-bottom: 0;
+    }
+    
+    .teaser-title,
+    .teaser-desc {
+        margin: 0;
+    }
+    
+    .speaker-display {
+        bottom: 100px;
+    }
+    
+    .control-bar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 8px 16px;
+    }
+    
+    .case-info {
+        width: auto;
+        flex: 0 0 auto;
+    }
+    
+    .progress-section {
+        flex: 1;
+        min-width: 200px;
+        max-width: 400px;
+    }
+    
+    .player-controls {
+        width: auto;
+        flex: 0 0 auto;
     }
 }
