@@ -23,10 +23,51 @@ from src.services.crawler import create_crawler_service
 from src.services.image_scraper import create_image_scraper, CaseImage
 
 
-async def fetch_real_case(query: str = "cold case unsolved murder") -> CaseFile:
-    """Fetch a real cold case from web sources."""
-    print("🔍 Searching for real cold cases...")
+async def fetch_real_case(query: str = "cold case unsolved murder", use_database: bool = True) -> CaseFile:
+    """Fetch a real cold case from database or web sources."""
     
+    # Try database first (638K cases!)
+    if use_database:
+        print("🗃️  Browsing case database...")
+        try:
+            from src.services.case_selector import create_case_selector
+            
+            selector = create_case_selector()
+            db_case = selector.get_case_for_episode(theme=query)
+            
+            if db_case:
+                # Convert database record to CaseFile
+                evidence_list = []
+                for ev in (db_case.get('case_evidence') or []):
+                    evidence_list.append(Evidence(
+                        evidence_id=str(ev.get('id', '')),
+                        evidence_type=ev.get('evidence_type', 'unknown'),
+                        description=ev.get('description', '')
+                    ))
+                
+                # Build location string
+                location_parts = [db_case.get('city'), db_case.get('state')]
+                location = ', '.join(filter(None, location_parts)) or 'Unknown Location'
+                
+                case = CaseFile(
+                    case_id=db_case['case_id'],
+                    title=db_case['title'],
+                    location=location,
+                    date_occurred=db_case.get('date_occurred'),
+                    raw_content=db_case.get('summary') or db_case.get('raw_content') or '',
+                    evidence_list=evidence_list,
+                    source_urls=[db_case.get('source_url')] if db_case.get('source_url') else []
+                )
+                
+                print(f"✅ Selected from database: {case.title}")
+                print(f"   Location: {case.location}")
+                print(f"   Date: {case.date_occurred or 'Unknown'}")
+                return case
+        except Exception as e:
+            print(f"⚠️  Database error: {e}, falling back to web crawler...")
+    
+    # Fallback to web crawler
+    print("🔍 Searching web for cold cases...")
     crawler = create_crawler_service()
     
     try:
@@ -135,7 +176,9 @@ async def create_real_episode():
     debate_engine = create_debate_engine()
     
     try:
-        script = await debate_engine.generate_debate(case, num_exchanges=6)
+        # Adjust exchanges based on available ElevenLabs credits
+        # With limited credits, generate ~12 exchanges for ~5 minute episode
+        script = await debate_engine.generate_debate(case, num_exchanges=12)
         print(f"✅ Generated {len(script.chapters)} dialogue lines")
     except Exception as e:
         print(f"❌ Debate generation failed: {e}")
@@ -166,17 +209,27 @@ async def create_real_episode():
                 "emotion": line.emotion_tag,
             }
             
+            # Assign image index - rotate through available images
+            if case_images:
+                cue["imageIndex"] = i % len(case_images)
+            
             # Add scene/evidence based on content
             text_lower = line.text.lower()
-            if any(word in text_lower for word in ["evidence", "found", "discovered", "body"]):
+            evidence_keywords = ["evidence", "found", "discovered", "body", "witness", "forensic", "clue", "investigation"]
+            if any(word in text_lower for word in evidence_keywords):
                 cue["showEvidence"] = True
                 if case.evidence_list:
-                    cue["evidenceText"] = case.evidence_list[i % len(case.evidence_list)].description
+                    cue["evidenceText"] = f"Evidence: {case.evidence_list[i % len(case.evidence_list)].description}"
             
             if i == 0:  # First line shows location
                 cue["showLocation"] = True
                 cue["location"] = case.location
                 cue["date"] = case.date_occurred
+            
+            # Show location stamp periodically (every ~2 minutes / 8 exchanges)
+            if i > 0 and i % 8 == 0:
+                cue["showLocation"] = True
+                cue["location"] = case.location
             
             visual_cues.append(cue)
             audio_segments.append(audio_data)

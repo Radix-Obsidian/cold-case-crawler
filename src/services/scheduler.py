@@ -97,7 +97,7 @@ class EpisodeScheduler:
             self._save_data()
     
     def get_next_case_query(self) -> str:
-        """Get the next case query in rotation."""
+        """Get the next case query/theme in rotation."""
         if not self.config.case_sources:
             return "cold case unsolved"
         
@@ -105,6 +105,26 @@ class EpisodeScheduler:
         self.case_source_index = (self.case_source_index + 1) % len(self.config.case_sources)
         self._save_data()
         return query
+    
+    def get_case_from_database(self, theme: str = None):
+        """
+        Get a case directly from the 638K case database.
+        This is how the agents browse their research materials.
+        """
+        try:
+            from src.services.case_selector import create_case_selector
+            
+            selector = create_case_selector()
+            case = selector.get_case_for_episode(theme=theme or self.get_next_case_query())
+            
+            if case:
+                print(f"🗃️  Selected from database: {case.get('title')}")
+                print(f"   Location: {case.get('city')}, {case.get('state')}")
+                return case
+        except Exception as e:
+            print(f"⚠️  Database unavailable: {e}")
+        
+        return None
     
     def calculate_next_date(self, from_date: Optional[datetime] = None) -> datetime:
         """Calculate the next scheduled date based on frequency."""

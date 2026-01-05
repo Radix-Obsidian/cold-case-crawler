@@ -39,7 +39,11 @@ class Settings(BaseSettings):
     # Creatomate
     creatomate_template_id: str = ""
 
-    model_config = {"env_file": ".env"}
+    # Stripe
+    stripe_secret_key: str = ""
+    stripe_publishable_key: str = ""
+
+    model_config = {"env_file": ".env", "extra": "ignore"}
 
 
 @lru_cache

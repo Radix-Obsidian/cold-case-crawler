@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Request, Query
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
@@ -7,7 +7,7 @@ import uvicorn
 import os
 import asyncio
 import json
-from typing import Optional
+from typing import Optional, List
 
 # Import our services
 from src.models.case import CaseFile, Evidence
@@ -16,6 +16,13 @@ from src.services.audio import create_audio_service
 
 # Import API routers
 from src.api.membership import router as membership_router
+
+# Import case selector for database access
+try:
+    from src.services.case_selector import create_case_selector
+    CASE_SELECTOR_AVAILABLE = True
+except ImportError:
+    CASE_SELECTOR_AVAILABLE = False
 
 app = FastAPI(title="Dead Air API")
 
@@ -95,6 +102,63 @@ async def generate_episode(request: CaseRequest, background_tasks: BackgroundTas
     """Start the generation process in the background."""
     background_tasks.add_task(generate_episode_task, request)
     return {"status": "processing", "message": "Investigative team dispatched. Analysis underway."}
+
+@app.get("/api/cases")
+async def get_cases(
+    limit: int = Query(50, le=500),
+    offset: int = Query(0),
+    state: str = Query(None),
+    case_type: str = Query(None),
+    search: str = Query(None)
+):
+    """Get cases from the database for the case browser."""
+    if not CASE_SELECTOR_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Case database not available")
+    
+    try:
+        selector = create_case_selector()
+        
+        if search:
+            cases = selector.search(search, limit=limit)
+        else:
+            # Build query based on filters
+            cases = selector.get_random_unsolved(state=state, limit=limit)
+        
+        return {"cases": cases, "total": len(cases)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/cases/stats")
+async def get_case_stats():
+    """Get database statistics."""
+    if not CASE_SELECTOR_AVAILABLE:
+        return {"total_cases": 0, "unsolved_cases": 0, "missing_persons": 0, "states_covered": 0}
+    
+    try:
+        selector = create_case_selector()
+        return selector.get_stats()
+    except Exception as e:
+        return {"total_cases": 0, "unsolved_cases": 0, "error": str(e)}
+
+
+@app.get("/api/cases/{case_id}")
+async def get_case(case_id: str):
+    """Get a specific case by ID."""
+    if not CASE_SELECTOR_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Case database not available")
+    
+    try:
+        selector = create_case_selector()
+        case = selector.get_by_id(case_id)
+        if not case:
+            raise HTTPException(status_code=404, detail="Case not found")
+        return case
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get("/api/episode")
 async def get_episode(request: Request):

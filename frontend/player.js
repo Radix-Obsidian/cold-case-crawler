@@ -382,6 +382,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     // ========== INITIALIZE ==========
     await loadEpisodeData();
     
+    // Coming Soon Teaser dismiss
+    const comingSoonTeaser = document.getElementById('comingSoonTeaser');
+    const teaserDismiss = document.getElementById('teaserDismiss');
+    if (teaserDismiss && comingSoonTeaser) {
+        teaserDismiss.addEventListener('click', () => {
+            comingSoonTeaser.classList.add('hidden');
+            localStorage.setItem('teaserDismissed', 'true');
+        });
+        // Check if previously dismissed
+        if (localStorage.getItem('teaserDismissed') === 'true') {
+            comingSoonTeaser.classList.add('hidden');
+        }
+    }
+    
     // Case panel toggle button
     const casePanelToggleBtn = document.getElementById('casePanelToggleBtn');
     

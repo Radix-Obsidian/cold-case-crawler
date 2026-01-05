@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Browser - Dead Air</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cases.css">
+</head>
+<body>
+    <div class="cases-app">
+        <!-- Header -->
+        <header class="cases-header">
+            <a href="index.html" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Back to Player</span>
+            </a>
+            <div class="header-title">
+                <h1>Case Database</h1>
+                <span class="case-count" id="caseCount">Loading...</span>
+            </div>
+            <div class="header-actions">
+                <button class="view-toggle" id="viewToggle" title="Toggle view">
+                    <svg class="icon-grid" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zm10-10h8v8h-8V3zm0 10h8v8h-8v-8z"/></svg>
+                    <svg class="icon-list" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-item">
+                <span class="stat-value" id="statTotal">-</span>
+                <span class="stat-label">Total Cases</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="statUnsolved">-</span>
+                <span class="stat-label">Unsolved</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="statMissing">-</span>
+                <span class="stat-label">Missing Persons</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="statStates">-</span>
+                <span class="stat-label">States Covered</span>
+            </div>
+        </div>
+
+        <!-- Search & Filters -->
+        <div class="search-section">
+            <div class="search-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" id="searchInput" placeholder="Search by city, state, or keyword...">
+                <button class="clear-search" id="clearSearch" title="Clear">×</button>
+            </div>
+            <div class="filter-row">
+                <select id="filterState" class="filter-select">
+                    <option value="">All States</option>
+                </select>
+                <select id="filterType" class="filter-select">
+                    <option value="">All Types</option>
+                    <option value="homicide">Homicide</option>
+                    <option value="missing_person">Missing Person</option>
+                    <option value="unidentified">Unidentified</option>
+                </select>
+                <select id="filterYear" class="filter-select">
+                    <option value="">All Years</option>
+                </select>
+                <button class="filter-btn active" id="filterUnsolved">
+                    <span class="dot"></span> Unsolved Only
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="cases-main">
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState">
+                <div class="loading-spinner"></div>
+                <p>Loading case database...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state hidden" id="emptyState">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M9 12h6m-3-3v6m-7.5 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15A2.25 2.25 0 002.25 6.75v10.5A2.25 2.25 0 004.5 18z"/>
+                </svg>
+                <h3>No Cases Found</h3>
+                <p>Try adjusting your search or filters.</p>
+            </div>
+
+            <!-- Case Grid -->
+            <div class="case-grid" id="caseGrid"></div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <button class="page-btn" id="prevPage" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <span class="page-info" id="pageInfo">Page 1 of 1</span>
+                <button class="page-btn" id="nextPage">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </div>
+        </main>
+
+        <!-- Case Detail Modal -->
+        <div class="case-modal" id="caseModal">
+            <div class="modal-backdrop" id="modalBackdrop"></div>
+            <div class="modal-content">
+                <button class="modal-close" id="modalClose">×</button>
+                <div class="modal-header">
+                    <span class="modal-badge" id="modalBadge">CASE FILE</span>
+                    <h2 id="modalTitle">Loading...</h2>
+                    <p class="modal-meta" id="modalMeta"></p>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-section">
+                        <h4>Summary</h4>
+                        <p id="modalSummary">Loading case details...</p>
+                    </div>
+                    <div class="modal-section" id="modalVictimSection">
+                        <h4>Victim Information</h4>
+                        <div class="victim-info" id="modalVictim"></div>
+                    </div>
+                    <div class="modal-section" id="modalEvidenceSection">
+                        <h4>Evidence</h4>
+                        <div class="evidence-list" id="modalEvidence"></div>
+                    </div>
+                    <div class="modal-section">
+                        <h4>Source</h4>
+                        <p class="modal-source" id="modalSource"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="modal-action" id="modalSourceLink" href="#" target="_blank">View Original Source</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="cases.js"></script>
+</body>
+</html>

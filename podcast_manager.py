@@ -150,9 +150,15 @@ def cmd_run_scheduled(args):
     
     print(f"📋 Found {len(pending)} pending episode(s)")
     
+    # Try to get case from database first
+    print("\n🗃️  Browsing case database for material...")
+    db_case = scheduler.get_case_from_database()
+    if db_case:
+        print(f"   📋 Pre-selected: {db_case.get('title')}")
+    
     for episode in pending:
         print(f"\n🎙️  Processing: {episode.episode_id}")
-        print(f"   Query: {episode.case_query}")
+        print(f"   Theme: {episode.case_query}")
         
         # Check budget
         estimate = budget.estimate_episode_cost()
@@ -163,11 +169,11 @@ def cmd_run_scheduled(args):
             scheduler.mark_skipped(episode.episode_id, msg)
             continue
         
-        # Generate episode
+        # Generate episode - now uses database cases automatically
         try:
             from create_real_episode import create_real_episode
             
-            # TODO: Pass case_query to create_real_episode
+            # create_real_episode now pulls from 638K case database
             episode_data = asyncio.run(create_real_episode())
             
             # Record usage

@@ -67,6 +67,12 @@ Thumbs.db
 budget_data.json
 schedule_data.json
 
+# Large data files (download via Kaggle API)
+data/raw/*.csv
+data/raw/*.zip
+data/processed/*.json
+data/covered_cases.json
+
 # Kiro
 .kiro/specs/*/
 
