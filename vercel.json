@@ -25,5 +25,8 @@
         { "key": "X-Frame-Options", "value": "DENY" }
       ]
     }
-  ]
+  ],
+  "analytics": {
+    "enabled": true
+  }
 }
