@@ -146,9 +146,21 @@ CASE DETAILS:
         if speaker == "maya":
             if not context:
                 instruction = """
-You are starting the discussion about this cold case. 
-Open with an intriguing observation or question about the case.
-Generate your dialogue line as Maya Vance.
+You are OPENING this episode of Dead Air. This is the INTRO.
+- Welcome listeners to Dead Air
+- Introduce yourself and mention Dr. Thorne
+- Briefly tease this week's case to hook listeners
+- Set the tone for the investigation ahead
+Generate your opening dialogue line as Maya Vance.
+"""
+            elif len(context) >= 28:  # Near the end (for 15 exchanges)
+                instruction = """
+You are CLOSING this episode of Dead Air. This is the OUTRO.
+- Summarize the key theories discussed
+- Thank listeners for joining
+- Remind them to subscribe and follow Dead Air for next week's case
+- Sign off with warmth
+Generate your closing dialogue line as Maya Vance.
 """
             else:
                 instruction = """
@@ -157,7 +169,25 @@ Respond to Dr. Thorne's points while advancing your narrative perspective.
 Generate your next dialogue line.
 """
         else:  # thorne
-            instruction = """
+            if len(context) == 1:  # First response after Maya's intro
+                instruction = """
+Maya just opened the show. Respond as Dr. Thorne with your intro.
+- Greet listeners with your characteristic dry wit
+- Acknowledge Maya's enthusiasm
+- Set expectations for evidence-based analysis
+Generate your opening dialogue line as Dr. Thorne.
+"""
+            elif len(context) >= 29:  # Near the end
+                instruction = """
+You are helping CLOSE this episode of Dead Air.
+- Summarize what the evidence actually supports
+- Acknowledge what remains unknown about this case
+- Encourage listeners to think critically
+- Sign off professionally
+Generate your closing dialogue line as Dr. Thorne.
+"""
+            else:
+                instruction = """
 Respond to Maya's points as Dr. Aris Thorne.
 Challenge her theories with evidence-based analysis.
 Generate your next dialogue line.
