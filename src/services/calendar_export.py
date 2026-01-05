@@ -59,7 +59,7 @@ def generate_ics_event(
     return "\n".join(lines)
 
 
-def generate_ics_calendar(events: List[dict], calendar_name: str = "Cold Case Crawler") -> str:
+def generate_ics_calendar(events: List[dict], calendar_name: str = "Murder Index") -> str:
     """
     Generate a complete ICS calendar file.
     
@@ -73,7 +73,7 @@ def generate_ics_calendar(events: List[dict], calendar_name: str = "Cold Case Cr
     lines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
-        "PRODID:-//Cold Case Crawler//Podcast Schedule//EN",
+        "PRODID:-//Murder Index//Podcast Schedule//EN",
         f"X-WR-CALNAME:{calendar_name}",
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
@@ -95,7 +95,7 @@ def generate_ics_calendar(events: List[dict], calendar_name: str = "Cold Case Cr
     return "\n".join(lines)
 
 
-def export_schedule_to_ics(output_file: str = "cold_case_schedule.ics") -> str:
+def export_schedule_to_ics(output_file: str = "murder_index_schedule.ics") -> str:
     """
     Export the current schedule to an ICS file.
     

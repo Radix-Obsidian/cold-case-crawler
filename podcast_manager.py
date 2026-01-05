@@ -317,7 +317,7 @@ def cmd_membership(args):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Cold Case Crawler - Podcast Manager",
+        description="Murder Index - Podcast Manager",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

@@ -1,4 +1,4 @@
-// Case Browser - Cold Case Crawler
+// Case Browser - Murder Index
 // Connects to Supabase backend for case data
 
 document.addEventListener('DOMContentLoaded', async () => {

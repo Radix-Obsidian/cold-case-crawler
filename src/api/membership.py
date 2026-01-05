@@ -123,7 +123,7 @@ async def free_signup(request: FreeSignupRequest):
         if result.success:
             return {
                 "status": "success",
-                "message": "Welcome to Cold Case Crawler! Check your email for a login link.",
+                "message": "Welcome to Murder Index! Check your email for a login link.",
                 "tier": "free",
             }
         else:

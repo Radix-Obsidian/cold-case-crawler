@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function createFallbackCues() {
         // Fallback for when episode_data.json doesn't exist
         return [
-            { time: 0, speaker: 'maya', text: 'Welcome to Cold Case Crawler...', showLocation: true },
+            { time: 0, speaker: 'maya', text: 'Welcome to Murder Index...', showLocation: true },
             { time: 5, speaker: 'maya', text: 'Today we investigate a mystery that has haunted investigators for decades.' },
             { time: 12, speaker: 'thorne', text: "Let's examine the evidence." },
             { time: 18, speaker: 'maya', text: 'The victim was found under mysterious circumstances.' },

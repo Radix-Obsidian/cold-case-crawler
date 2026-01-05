@@ -165,7 +165,7 @@
     }
   ],
   "transcript": [
-    {"speaker": "maya", "text": "Welcome back to Cold Case Crawler. I'm Maya Vance, and today we're diving into a case that's haunted Minnesota investigators for decades.", "emotion": "excited"},
+    {"speaker": "maya", "text": "Welcome back to Murder Index. I'm Maya Vance, and today we're diving into a case that's haunted Minnesota investigators for decades.", "emotion": "excited"},
     {"speaker": "thorne", "text": "And I'm Dr. Aris Thorne. The case Maya's referring to involves a disappearance with virtually no physical evidence - just witness testimony and circumstantial connections.", "emotion": "neutral"},
     {"speaker": "maya", "text": "But here's what's fascinating - the witness accounts don't just contradict each other, they create an impossible timeline.", "emotion": "whispers"},
     {"speaker": "thorne", "text": "That's precisely the problem with this case. Without corroborating evidence, we're left with unreliable human memory.", "emotion": "scoffs"},
