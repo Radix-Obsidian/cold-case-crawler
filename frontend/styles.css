@@ -1206,7 +1206,7 @@ body {
     
     .teaser-dismiss {
         position: absolute;
-        top: max(12px, env(safe-area-inset-top));
+        top: max(60px, calc(env(safe-area-inset-top) + 50px));
         right: 12px;
         width: 44px;
         height: 44px;
@@ -1214,6 +1214,10 @@ body {
         align-items: center;
         justify-content: center;
         font-size: 1.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: #fff;
+        opacity: 1;
     }
     
     /* ===== VISUAL STAGE - Full screen experience ===== */
