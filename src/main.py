@@ -15,7 +15,7 @@ from src.services.audio import create_audio_service
 # Import API routers
 from src.api.membership import router as membership_router
 
-app = FastAPI(title="Cold Case Crawler API")
+app = FastAPI(title="Dead Air API")
 
 # Include membership routes
 app.include_router(membership_router)
