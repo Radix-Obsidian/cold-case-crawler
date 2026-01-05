@@ -146,8 +146,8 @@ CASE DETAILS:
         if speaker == "maya":
             if not context:
                 instruction = """
-You are OPENING this episode of Dead Air. This is the INTRO.
-- Welcome listeners to Dead Air
+You are OPENING this episode of Murder Index. This is the INTRO.
+- Welcome listeners to Murder Index
 - Introduce yourself and mention Dr. Thorne
 - Briefly tease this week's case to hook listeners
 - Set the tone for the investigation ahead
