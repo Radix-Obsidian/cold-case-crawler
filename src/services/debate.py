@@ -179,7 +179,7 @@ Generate your opening dialogue line as Dr. Thorne.
 """
             elif len(context) >= 29:  # Near the end
                 instruction = """
-You are helping CLOSE this episode of Dead Air.
+You are helping CLOSE this episode of Murder Index.
 - Summarize what the evidence actually supports
 - Acknowledge what remains unknown about this case
 - Encourage listeners to think critically

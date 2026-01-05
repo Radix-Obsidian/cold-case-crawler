@@ -24,7 +24,7 @@ try:
 except ImportError:
     CASE_SELECTOR_AVAILABLE = False
 
-app = FastAPI(title="Dead Air API")
+app = FastAPI(title="Murder Index API")
 
 # Include membership routes
 app.include_router(membership_router)
