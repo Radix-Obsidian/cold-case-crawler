@@ -1,0 +1,31 @@
+{
+  "name": "audio-trigger",
+  "description": "Automatically triggers audio generation when a PodcastScript is saved to Supabase",
+  "trigger": {
+    "type": "webhook",
+    "event": "INSERT",
+    "table": "scripts",
+    "schema": "public"
+  },
+  "action": {
+    "type": "http",
+    "method": "POST",
+    "url": "${API_BASE_URL}/api/v1/webhooks/script-created",
+    "headers": {
+      "Content-Type": "application/json",
+      "X-Webhook-Secret": "${WEBHOOK_SECRET}"
+    },
+    "body": {
+      "script_id": "{{record.script_id}}",
+      "case_id": "{{record.case_id}}",
+      "episode_title": "{{record.episode_title}}",
+      "event_type": "script.created"
+    }
+  },
+  "retry": {
+    "max_attempts": 3,
+    "backoff": "exponential",
+    "base_delay_seconds": 1
+  },
+  "enabled": true
+}

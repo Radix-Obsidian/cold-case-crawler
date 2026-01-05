@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cold Case Crawler</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app" id="app">
+        <!-- Cinematic Visual Stage -->
+        <div class="visual-stage" id="visualStage">
+            <!-- Background Layer -->
+            <div class="bg-layer" id="bgLayer"></div>
+            
+            <!-- Evidence/Scene Display -->
+            <div class="scene-display" id="sceneDisplay">
+                <img src="evidence_map.png" alt="Scene" id="sceneImage" class="scene-image">
+                <div class="scene-overlay"></div>
+            </div>
+            
+            <!-- Text Overlay -->
+            <div class="text-overlay" id="textOverlay">
+                <div class="location-stamp" id="locationStamp">
+                    <span class="stamp-location">MINNEAPOLIS, MN</span>
+                    <span class="stamp-date">DECEMBER 14, 1987</span>
+                </div>
+                <h1 class="dramatic-text" id="dramaticText"></h1>
+            </div>
+            
+            <!-- Speaker Display -->
+            <div class="speaker-display" id="speakerDisplay">
+                <div class="speaker-card maya" id="mayaCard">
+                    <img src="maya_vance.png" alt="Maya Vance">
+                    <div class="speaker-info">
+                        <span class="name">Maya Vance</span>
+                        <span class="role">Narrative Profiler</span>
+                    </div>
+                    <div class="speaking-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+                <div class="speaker-card thorne" id="thorneCard">
+                    <img src="dr_aris_thorne.png" alt="Dr. Thorne">
+                    <div class="speaker-info">
+                        <span class="name">Dr. Aris Thorne</span>
+                        <span class="role">Forensic Skeptic</span>
+                    </div>
+                    <div class="speaking-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Evidence Popup -->
+            <div class="evidence-popup" id="evidencePopup">
+                <div class="evidence-label">📁 EVIDENCE FILE</div>
+                <div class="evidence-content" id="evidenceContent">
+                    <p id="evidenceCaption">Riverside Park - Crime Scene Map</p>
+                </div>
+            </div>
+            
+            <!-- Case Summary Panel -->
+            <div class="case-panel" id="casePanel">
+                <div class="case-panel-header">
+                    <span class="panel-label">CASE FILE</span>
+                    <button class="panel-toggle" id="panelToggle">×</button>
+                </div>
+                <div class="case-panel-content">
+                    <h3 id="panelTitle">The Riverside Park Disappearance</h3>
+                    <p class="panel-meta" id="panelMeta">Minneapolis, MN • December 14, 1987</p>
+                    <p class="panel-summary" id="panelSummary">Loading case details...</p>
+                    <div class="panel-evidence" id="panelEvidence"></div>
+                </div>
+            </div>
+            
+            <!-- Timeline Bar -->
+            <div class="timeline-bar" id="timelineBar">
+                <div class="timeline-marker" data-time="0">
+                    <span class="marker-dot"></span>
+                    <span class="marker-label">Intro</span>
+                </div>
+                <div class="timeline-marker" data-time="20">
+                    <span class="marker-dot"></span>
+                    <span class="marker-label">The Night</span>
+                </div>
+                <div class="timeline-marker" data-time="40">
+                    <span class="marker-dot"></span>
+                    <span class="marker-label">Evidence</span>
+                </div>
+                <div class="timeline-marker" data-time="60">
+                    <span class="marker-dot"></span>
+                    <span class="marker-label">Theories</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Membership Banner -->
+        <a href="membership.html" class="membership-banner" id="membershipBanner">
+            <span class="banner-icon">🔓</span>
+            <span class="banner-text">Unlock Premium: Early access, bonus episodes, evidence files</span>
+            <span class="banner-cta">Join →</span>
+        </a>
+
+        <!-- Bottom Control Bar -->
+        <div class="control-bar" id="controlBar">
+            <audio id="audio" preload="auto">
+                <source src="cold_case_episode.mp3" type="audio/mpeg">
+            </audio>
+            
+            <div class="case-info">
+                <span class="case-badge">CASE #001</span>
+                <span class="case-title">The Riverside Park Disappearance</span>
+            </div>
+            
+            <div class="player-controls">
+                <button class="ctrl-btn" id="rewindBtn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>
+                </button>
+                
+                <button class="play-btn" id="playBtn">
+                    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </button>
+                
+                <button class="ctrl-btn" id="forwardBtn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
+                </button>
+            </div>
+            
+            <div class="progress-section">
+                <span class="time" id="currentTime">0:00</span>
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="time" id="duration">0:00</span>
+            </div>
+            
+            <div class="extra-controls">
+                <button class="speed-btn" id="speedBtn">1×</button>
+                <button class="fullscreen-btn" id="fullscreenBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="player.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+{
+  "case": {
+    "id": "minnesota-riverside-1987",
+    "title": "The Riverside Park Disappearance",
+    "location": "Minneapolis, Minnesota",
+    "date": "December 14, 1987",
+    "summary": "Sarah Johnson, a 28-year-old nurse at Minneapolis General Hospital, vanished after her night shift. Her car was found three days later in Riverside Park, keys still in the ignition. No signs of struggle. Her purse was missing, but her jacket remained on the passenger seat.",
+    "evidence": [
+      {"id": "ev-001", "type": "Physical", "description": "Abandoned 1985 Honda Civic with keys in ignition"},
+      {"id": "ev-002", "type": "Witness", "description": "Male figure seen near vehicle at 11 PM"},
+      {"id": "ev-003", "type": "Circumstantial", "description": "Recent breakup with hospital coworker Dr. Mark Stevens"}
+    ],
+    "sources": ["https://uncovered.com", "https://charleyproject.org"],
+    "images": [
+      {
+        "id": "9e2578fa32ae",
+        "path": "images/9e2578fa32ae.jpg",
+        "type": "location",
+        "caption": "Investigation scene",
+        "attribution": "Image source: BBC News"
+      },
+      {
+        "id": "02e93cd8ec32",
+        "path": "images/02e93cd8ec32.jpg",
+        "type": "evidence",
+        "caption": "Evidence documentation",
+        "attribution": "Image source: BBC News"
+      },
+      {
+        "id": "34743a33166e",
+        "path": "images/34743a33166e.jpg",
+        "type": "location",
+        "caption": "Crime scene area",
+        "attribution": "Image source: BBC News"
+      },
+      {
+        "id": "964c765fed88",
+        "path": "images/964c765fed88.jpg",
+        "type": "document",
+        "caption": "Case file documentation",
+        "attribution": "Image source: BBC News"
+      },
+      {
+        "id": "b357e3d15c3d",
+        "path": "images/b357e3d15c3d.jpg",
+        "type": "general",
+        "caption": "Investigation materials",
+        "attribution": "Image source: BBC News"
+      },
+      {
+        "id": "82a285f0189d",
+        "path": "images/82a285f0189d.jpg",
+        "type": "evidence",
+        "caption": "Physical evidence",
+        "attribution": "Image source: BBC News"
+      },
+      {
+        "id": "69d43b2f14c9",
+        "path": "images/69d43b2f14c9.jpg",
+        "type": "location",
+        "caption": "Search area",
+        "attribution": "Image source: BBC News"
+      },
+      {
+        "id": "0925369cdcf3",
+        "path": "images/0925369cdcf3.jpg",
+        "type": "general",
+        "caption": "Case overview",
+        "attribution": "Image source: BBC News"
+      }
+    ]
+  },
+  "audio": {
+    "filename": "cold_case_episode.mp3",
+    "duration": 162.34,
+    "generated": "2025-01-04T19:29:00"
+  },
+  "visualCues": [
+    {
+      "time": 0,
+      "duration": 16,
+      "speaker": "maya",
+      "text": "Welcome back to Cold Case Crawler. I'm Maya Vance, and today we're diving into a case that's haunted Minnesota investigators for decades.",
+      "emotion": "excited",
+      "showLocation": true,
+      "location": "Minneapolis, Minnesota",
+      "date": "December 14, 1987",
+      "imageIndex": 0
+    },
+    {
+      "time": 16,
+      "duration": 18,
+      "speaker": "thorne",
+      "text": "And I'm Dr. Aris Thorne. The case Maya's referring to involves a disappearance with virtually no physical evidence - just witness testimony and circumstantial connections.",
+      "emotion": "neutral",
+      "imageIndex": 1
+    },
+    {
+      "time": 34,
+      "duration": 18,
+      "speaker": "maya",
+      "text": "But here's what's fascinating - the witness accounts don't just contradict each other, they create an impossible timeline. Someone saw our victim at 3 PM, another at 5 PM, but the last confirmed sighting was actually at 2:30.",
+      "emotion": "whispers",
+      "imageIndex": 2
+    },
+    {
+      "time": 52,
+      "duration": 16,
+      "speaker": "thorne",
+      "text": "That's precisely the problem with this case. Without corroborating evidence, we're left with unreliable human memory. Eyewitness testimony is notoriously unreliable, especially after decades.",
+      "emotion": "scoffs",
+      "showEvidence": true,
+      "evidenceText": "Witness Report: Male figure seen near vehicle at 11 PM",
+      "imageIndex": 3
+    },
+    {
+      "time": 68,
+      "duration": 14,
+      "speaker": "maya",
+      "text": "Okay, but what about the pattern? This isn't the only disappearance in that area during that time period. Three people, all within a five-mile radius, all within six months.",
+      "emotion": "interrupting",
+      "imageIndex": 4
+    },
+    {
+      "time": 82,
+      "duration": 16,
+      "speaker": "thorne",
+      "text": "Correlation isn't causation, Maya. Rural Minnesota in the 1980s - people moved away, changed their lives, started over. Not every missing person is a victim of foul play.",
+      "emotion": "clears_throat",
+      "imageIndex": 5
+    },
+    {
+      "time": 98,
+      "duration": 14,
+      "speaker": "maya",
+      "text": "But the families never heard from them again. No phone calls, no letters, no social media presence years later. That's not starting over - that's vanishing.",
+      "emotion": "gasps",
+      "showEvidence": true,
+      "evidenceText": "Evidence: Abandoned 1985 Honda Civic with keys in ignition",
+      "imageIndex": 6
+    },
+    {
+      "time": 112,
+      "duration": 16,
+      "speaker": "thorne",
+      "text": "I'll grant you that's unusual. But without physical evidence, without a crime scene, we're speculating. The data simply doesn't support a serial killer theory.",
+      "emotion": "dramatic_pause",
+      "imageIndex": 7
+    },
+    {
+      "time": 128,
+      "duration": 14,
+      "speaker": "maya",
+      "text": "Sometimes the absence of evidence IS the evidence, Dr. Thorne. Someone was very, very good at making people disappear without a trace.",
+      "emotion": "whispers",
+      "imageIndex": 0
+    },
+    {
+      "time": 142,
+      "duration": 20,
+      "speaker": "thorne",
+      "text": "And that's exactly the kind of thinking that leads investigations astray. We follow the evidence, not the narrative. Until we have concrete proof, this remains an unsolved missing persons case.",
+      "emotion": "sighs",
+      "imageIndex": 1
+    }
+  ],
+  "transcript": [
+    {"speaker": "maya", "text": "Welcome back to Cold Case Crawler. I'm Maya Vance, and today we're diving into a case that's haunted Minnesota investigators for decades.", "emotion": "excited"},
+    {"speaker": "thorne", "text": "And I'm Dr. Aris Thorne. The case Maya's referring to involves a disappearance with virtually no physical evidence - just witness testimony and circumstantial connections.", "emotion": "neutral"},
+    {"speaker": "maya", "text": "But here's what's fascinating - the witness accounts don't just contradict each other, they create an impossible timeline.", "emotion": "whispers"},
+    {"speaker": "thorne", "text": "That's precisely the problem with this case. Without corroborating evidence, we're left with unreliable human memory.", "emotion": "scoffs"},
+    {"speaker": "maya", "text": "Okay, but what about the pattern? This isn't the only disappearance in that area during that time period.", "emotion": "interrupting"},
+    {"speaker": "thorne", "text": "Correlation isn't causation, Maya. Rural Minnesota in the 1980s - people moved away, changed their lives, started over.", "emotion": "clears_throat"},
+    {"speaker": "maya", "text": "But the families never heard from them again. No phone calls, no letters. That's not starting over - that's vanishing.", "emotion": "gasps"},
+    {"speaker": "thorne", "text": "I'll grant you that's unusual. But without physical evidence, we're speculating.", "emotion": "dramatic_pause"},
+    {"speaker": "maya", "text": "Sometimes the absence of evidence IS the evidence, Dr. Thorne.", "emotion": "whispers"},
+    {"speaker": "thorne", "text": "We follow the evidence, not the narrative. Until we have concrete proof, this remains unsolved.", "emotion": "sighs"}
+  ]
+}

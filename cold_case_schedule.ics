@@ -1,0 +1,59 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Cold Case Crawler//Podcast Schedule//EN
+X-WR-CALNAME:Cold Case Crawler
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:ep-20260106@coldcasecrawler
+DTSTAMP:20260105T014733Z
+DTSTART:20260106T090000Z
+DTEND:20260106T100000Z
+SUMMARY:🎙️ Cold Case Crawler: unsolved murder cold case
+DESCRIPTION:Episode Generation Day!\n\nCase Topic: unsolved murder cold case\nStatus: pending\n\nTo generate this episode\, run:\npython3 podcast_manager.py generate\n\nOr let it run automatically with:\npython3 podcast_manager.py run\n
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: 🎙️ Cold Case Crawler: unsolved murder cold case
+TRIGGER:-PT60M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ep-20260113@coldcasecrawler
+DTSTAMP:20260105T014733Z
+DTSTART:20260113T090000Z
+DTEND:20260113T100000Z
+SUMMARY:🎙️ Cold Case Crawler: missing person cold case
+DESCRIPTION:Episode Generation Day!\n\nCase Topic: missing person cold case\nStatus: pending\n\nTo generate this episode\, run:\npython3 podcast_manager.py generate\n\nOr let it run automatically with:\npython3 podcast_manager.py run\n
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: 🎙️ Cold Case Crawler: missing person cold case
+TRIGGER:-PT60M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ep-20260120@coldcasecrawler
+DTSTAMP:20260105T014733Z
+DTSTART:20260120T090000Z
+DTEND:20260120T100000Z
+SUMMARY:🎙️ Cold Case Crawler: unidentified victim cold case
+DESCRIPTION:Episode Generation Day!\n\nCase Topic: unidentified victim cold case\nStatus: pending\n\nTo generate this episode\, run:\npython3 podcast_manager.py generate\n\nOr let it run automatically with:\npython3 podcast_manager.py run\n
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: 🎙️ Cold Case Crawler: unidentified victim cold case
+TRIGGER:-PT60M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ep-20260127@coldcasecrawler
+DTSTAMP:20260105T014733Z
+DTSTART:20260127T090000Z
+DTEND:20260127T100000Z
+SUMMARY:🎙️ Cold Case Crawler: mysterious disappearance unsol
+DESCRIPTION:Episode Generation Day!\n\nCase Topic: mysterious disappearance unsolved\nStatus: pending\n\nTo generate this episode\, run:\npython3 podcast_manager.py generate\n\nOr let it run automatically with:\npython3 podcast_manager.py run\n
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder: 🎙️ Cold Case Crawler: mysterious disappearance unsol
+TRIGGER:-PT60M
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Investigation - Cold Case Crawler</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(180deg, #1a1a2e 0%, #0a0a0a 100%);
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .plans-container {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            padding: 40px 20px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .plan-card {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 32px;
+            width: 320px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .plan-card:hover {
+            border-color: #c9a227;
+            transform: translateY(-4px);
+        }
+        
+        .plan-card.featured {
+            border-color: #c9a227;
+            background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
+        }
+        
+        .plan-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #c9a227;
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 20px;
+        }
+        
+        .plan-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #c9a227;
+            margin-bottom: 4px;
+        }
+        
+        .plan-price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+        }
+        
+        .plan-yearly {
+            font-size: 0.85rem;
+            color: #4a9;
+            margin-bottom: 24px;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+        
+        .plan-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #222;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .plan-features li::before {
+            content: '✓';
+            color: #c9a227;
+            font-weight: bold;
+        }
+        
+        .plan-btn {
+            width: 100%;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .plan-btn.primary {
+            background: #c9a227;
+            color: #000;
+        }
+        
+        .plan-btn.primary:hover {
+            background: #ddb52f;
+        }
+        
+        .plan-btn.secondary {
+            background: transparent;
+            border: 1px solid #444;
+            color: #fff;
+        }
+        
+        .plan-btn.secondary:hover {
+            border-color: #c9a227;
+            color: #c9a227;
+        }
+        
+        .billing-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        
+        .billing-toggle button {
+            padding: 10px 24px;
+            border: 1px solid #333;
+            background: transparent;
+            color: #888;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+        
+        .billing-toggle button.active {
+            background: #c9a227;
+            border-color: #c9a227;
+            color: #000;
+        }
+        
+        .save-badge {
+            background: #4a9;
+            color: #000;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+        }
+        
+        .faq-section {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .faq-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 32px;
+            color: #fff;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #222;
+            padding: 20px 0;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        
+        .faq-answer {
+            color: #888;
+            line-height: 1.6;
+        }
+        
+        .back-link {
+            display: inline-block;
+            padding: 20px;
+            color: #c9a227;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .modal-content input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #333;
+            background: #0a0a0a;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+        
+        .modal-content input:focus {
+            outline: none;
+            border-color: #c9a227;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .modal-actions button {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Player</a>
+    
+    <div class="hero">
+        <h1>Join the Investigation</h1>
+        <p>Get exclusive access to extended evidence files, early episodes, and help us uncover the truth.</p>
+    </div>
+    
+    <div class="billing-toggle">
+        <button id="monthlyBtn" class="active">Monthly</button>
+        <button id="yearlyBtn">Yearly <span class="save-badge">Save 17%</span></button>
+    </div>
+    
+    <div class="plans-container">
+        <!-- Free Tier -->
+        <div class="plan-card">
+            <div class="plan-name">Free Listener</div>
+            <div class="plan-price">$0 <span>/month</span></div>
+            <div class="plan-yearly">&nbsp;</div>
+            <ul class="plan-features">
+                <li>Access to all public episodes</li>
+                <li>Basic case summaries</li>
+                <li>Community discussions</li>
+            </ul>
+            <button class="plan-btn secondary" onclick="openFreeSignup()">
+                Start Listening Free
+            </button>
+        </div>
+        
+        <!-- Premium Tier -->
+        <div class="plan-card featured">
+            <div class="plan-name">Case Insider</div>
+            <div class="plan-price" id="premiumPrice">$9.99 <span>/month</span></div>
+            <div class="plan-yearly" id="premiumYearly">or $99.99/year (save $20)</div>
+            <ul class="plan-features">
+                <li>Everything in Free</li>
+                <li>Early access (48 hours)</li>
+                <li>Extended evidence files</li>
+                <li>Ad-free listening</li>
+                <li>Monthly bonus episodes</li>
+                <li>Discord access</li>
+            </ul>
+            <button class="plan-btn primary" onclick="openCheckout('premium')">
+                Become an Insider
+            </button>
+        </div>
+        
+        <!-- Founding Tier -->
+        <div class="plan-card">
+            <div class="plan-name">Founding Investigator</div>
+            <div class="plan-price" id="foundingPrice">$19.99 <span>/month</span></div>
+            <div class="plan-yearly" id="foundingYearly">or $199.99/year (save $40)</div>
+            <ul class="plan-features">
+                <li>Everything in Premium</li>
+                <li>Vote on case selection</li>
+                <li>Name in episode credits</li>
+                <li>Exclusive merchandise</li>
+                <li>Direct Q&A with hosts</li>
+                <li>Behind-the-scenes content</li>
+            </ul>
+            <button class="plan-btn primary" onclick="openCheckout('founding')">
+                Join as Founder
+            </button>
+        </div>
+    </div>
+    
+    <div class="faq-section">
+        <h2>Questions?</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question">Can I cancel anytime?</div>
+            <div class="faq-answer">Yes! Cancel anytime from your account settings. You'll keep access until the end of your billing period.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">What payment methods do you accept?</div>
+            <div class="faq-answer">We accept all major credit cards, Apple Pay, and Google Pay through our secure Stripe checkout.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">How do I access premium content?</div>
+            <div class="faq-answer">After subscribing, log in with your email to unlock premium episodes and evidence files directly in the player.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Can I upgrade or downgrade my plan?</div>
+            <div class="faq-answer">Absolutely. Visit your billing portal to change plans at any time. Changes take effect on your next billing date.</div>
+        </div>
+    </div>
+    
+    <!-- Email Modal -->
+    <div class="modal" id="emailModal">
+        <div class="modal-content">
+            <h3>Enter your email</h3>
+            <input type="email" id="emailInput" placeholder="your@email.com">
+            <div class="modal-actions">
+                <button class="plan-btn secondary" onclick="closeModal()">Cancel</button>
+                <button class="plan-btn primary" onclick="submitCheckout()">Continue to Checkout</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let selectedTier = null;
+        let billingCycle = 'monthly';
+        let isFreeSignup = false;
+        
+        // Billing toggle
+        document.getElementById('monthlyBtn').addEventListener('click', () => {
+            billingCycle = 'monthly';
+            document.getElementById('monthlyBtn').classList.add('active');
+            document.getElementById('yearlyBtn').classList.remove('active');
+            updatePrices();
+        });
+        
+        document.getElementById('yearlyBtn').addEventListener('click', () => {
+            billingCycle = 'yearly';
+            document.getElementById('yearlyBtn').classList.add('active');
+            document.getElementById('monthlyBtn').classList.remove('active');
+            updatePrices();
+        });
+        
+        function updatePrices() {
+            if (billingCycle === 'yearly') {
+                document.getElementById('premiumPrice').innerHTML = '$99.99 <span>/year</span>';
+                document.getElementById('foundingPrice').innerHTML = '$199.99 <span>/year</span>';
+            } else {
+                document.getElementById('premiumPrice').innerHTML = '$9.99 <span>/month</span>';
+                document.getElementById('foundingPrice').innerHTML = '$19.99 <span>/month</span>';
+            }
+        }
+        
+        function openCheckout(tier) {
+            selectedTier = tier;
+            isFreeSignup = false;
+            document.getElementById('emailModal').classList.add('active');
+            document.getElementById('emailInput').focus();
+        }
+        
+        function openFreeSignup() {
+            selectedTier = 'free';
+            isFreeSignup = true;
+            document.getElementById('emailModal').classList.add('active');
+            document.getElementById('emailInput').focus();
+        }
+        
+        function closeModal() {
+            document.getElementById('emailModal').classList.remove('active');
+            selectedTier = null;
+            isFreeSignup = false;
+        }
+        
+        async function submitCheckout() {
+            const email = document.getElementById('emailInput').value;
+            
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // Use relative URLs - works locally and with Vercel rewrites
+            const apiBase = '';
+            
+            try {
+                if (isFreeSignup) {
+                    // Free signup - no Stripe
+                    const response = await fetch(apiBase + '/membership/free-signup', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: email })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        // Save email to localStorage
+                        localStorage.setItem('memberEmail', email);
+                        localStorage.setItem('memberTier', 'free');
+                        
+                        alert('🎉 ' + data.message + '\n\nYou now have access to all free episodes!');
+                        window.location.href = 'index.html';
+                    } else {
+                        throw new Error(data.detail || 'Signup failed');
+                    }
+                } else {
+                    // Paid checkout - Stripe
+                    const response = await fetch(apiBase + '/membership/checkout', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: email,
+                            tier: selectedTier,
+                            billing_cycle: billingCycle
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        const error = await response.json();
+                        throw new Error(error.detail || 'Checkout failed');
+                    }
+                    
+                    const data = await response.json();
+                    
+                    // Redirect to Stripe Checkout
+                    window.location.href = data.checkout_url;
+                }
+                
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        // Close modal on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+        
+        // Close modal on background click
+        document.getElementById('emailModal').addEventListener('click', (e) => {
+            if (e.target.id === 'emailModal') closeModal();
+        });
+    </script>
+</body>
+</html>
