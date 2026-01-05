@@ -21,6 +21,62 @@
     box-sizing: border-box;
 }
 
+/* Site Header with Logo */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: linear-gradient(to bottom, rgba(10, 10, 12, 0.95), rgba(10, 10, 12, 0));
+    pointer-events: none;
+}
+
+.site-header > * {
+    pointer-events: auto;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+}
+
+.site-logo {
+    height: 36px;
+    width: auto;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.site-logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 12px rgba(139, 0, 0, 0.3));
+}
+
+.site-nav {
+    display: flex;
+    gap: 24px;
+}
+
+.site-nav a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color 0.2s ease;
+}
+
+.site-nav a:hover {
+    color: #fff;
+}
+
 html, body {
     height: 100%;
     overflow: hidden;
