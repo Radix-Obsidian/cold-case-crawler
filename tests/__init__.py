@@ -1,1 +1,1 @@
-"""Test suite for Cold Case Crawler."""
+"""Test suite for Murder Index."""

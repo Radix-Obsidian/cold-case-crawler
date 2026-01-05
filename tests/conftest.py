@@ -1,4 +1,4 @@
-"""Pytest fixtures for Cold Case Crawler tests."""
+"""Pytest fixtures for Murder Index tests."""
 
 import pytest
 

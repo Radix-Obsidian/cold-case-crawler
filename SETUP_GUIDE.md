@@ -1,4 +1,4 @@
-# Cold Case Crawler - Data Pipeline Setup Guide
+# Murder Index - Data Pipeline Setup Guide
 
 Complete guide to set up the Kaggle API, run the schema in Supabase, and ingest the full 638K homicide dataset.
 

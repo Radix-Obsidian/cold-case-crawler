@@ -1,5 +1,5 @@
 #!/bin/bash
-# Cold Case Crawler - Scheduled Episode Runner
+# Murder Index - Scheduled Episode Runner
 # Add to crontab for automated episode generation
 #
 # Example crontab entries:
@@ -20,7 +20,7 @@ LOG_FILE="logs/scheduled_$(date +%Y%m%d_%H%M%S).log"
 mkdir -p logs
 
 echo "========================================" | tee -a "$LOG_FILE"
-echo "Cold Case Crawler - Scheduled Run" | tee -a "$LOG_FILE"
+echo "Murder Index - Scheduled Run" | tee -a "$LOG_FILE"
 echo "$(date)" | tee -a "$LOG_FILE"
 echo "========================================" | tee -a "$LOG_FILE"
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Main data ingestion script for Cold Case Crawler.
+Main data ingestion script for Murder Index.
 
 Usage:
     python -m data_pipeline.ingest --source kaggle --limit 1000

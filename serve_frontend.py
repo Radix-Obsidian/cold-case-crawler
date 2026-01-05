@@ -13,7 +13,7 @@ os.chdir(DIRECTORY)
 
 Handler = http.server.SimpleHTTPRequestHandler
 
-print(f"🔍 Cold Case Crawler")
+print(f"🔍 Murder Index")
 print(f"=" * 40)
 print(f"🌐 Server running at http://localhost:{PORT}")
 print(f"📁 Serving files from: {DIRECTORY}/")

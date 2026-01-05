@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Create a Cold Case Crawler episode from REAL cold case data.
+Create a Murder Index episode from REAL cold case data.
 Exports timestamps and visual cues for the frontend.
 """
 

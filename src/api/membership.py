@@ -144,7 +144,7 @@ async def free_signup(request: FreeSignupRequest):
             await auth._create_member_record_by_email(email)
             return {
                 "status": "success",
-                "message": "Welcome to Cold Case Crawler!",
+                "message": "Welcome to Murder Index!",
                 "tier": "free",
             }
         except:

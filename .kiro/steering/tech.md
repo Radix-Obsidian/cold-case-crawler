@@ -1,4 +1,4 @@
-# Technical Standards: Cold Case Crawler
+# Technical Standards: Murder Index
 
 > *Python-native. Async-first. Type-safe. No exceptions.*
 
@@ -423,7 +423,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
-app = FastAPI(title="Cold Case Crawler API")
+app = FastAPI(title="Murder Index API")
 
 @app.exception_handler(ValidationError)
 async def validation_exception_handler(request: Request, exc: ValidationError):

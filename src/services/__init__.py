@@ -1,4 +1,4 @@
-"""Service layer for Cold Case Crawler."""
+"""Service layer for Murder Index."""
 
 from src.services.audio import AudioService, create_audio_service
 from src.services.crawler import CrawlerService, create_crawler_service

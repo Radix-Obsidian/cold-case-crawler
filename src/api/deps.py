@@ -1,4 +1,4 @@
-"""FastAPI dependencies for Cold Case Crawler API."""
+"""FastAPI dependencies for Murder Index API."""
 
 from functools import lru_cache
 from typing import Generator

@@ -1,4 +1,4 @@
--- Members table for Cold Case Crawler
+-- Members table for Murder Index
 -- Run this in your Supabase SQL Editor
 
 -- Create members table

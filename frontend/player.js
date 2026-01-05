@@ -1,4 +1,4 @@
-// Cold Case Crawler - Dynamic Visual Player
+// Murder Index - Dynamic Visual Player
 // Loads episode data from JSON for accurate sync
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateVisuals(visualCues[0]);
     }
     
-    console.log('🎬 Cold Case Crawler ready');
+    console.log('🎬 Murder Index ready');
     console.log('   SPACE = Play/Pause');
     console.log('   F = Fullscreen');
     console.log('   ←/→ = Skip 10s');

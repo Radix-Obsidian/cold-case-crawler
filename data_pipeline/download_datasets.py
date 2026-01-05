@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Download all required datasets for Cold Case Crawler.
+Download all required datasets for Murder Index.
 
 Datasets:
 1. Kaggle Homicide Reports (requires kaggle CLI)

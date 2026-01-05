@@ -1,6 +1,6 @@
 # Open Source ML Algorithms for Podcast UX Enhancement
 
-This document outlines open-source Python ML tools that can enhance the viewer/listener experience for the Cold Case Crawler podcast.
+This document outlines open-source Python ML tools that can enhance the viewer/listener experience for the Murder Index podcast.
 
 ---
 
@@ -177,7 +177,7 @@ This document outlines open-source Python ML tools that can enhance the viewer/l
   from TTS.api import TTS
   
   tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2")
-  tts.tts_to_file(text="Welcome to Cold Case Crawler",
+  tts.tts_to_file(text="Welcome to Murder Index",
                   speaker_wav="maya_sample.wav",
                   file_path="output.wav")
   ```

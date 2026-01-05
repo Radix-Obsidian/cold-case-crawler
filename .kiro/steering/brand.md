@@ -1,4 +1,4 @@
-# Brand Bible: The Cold Case Crawler
+# Brand Bible: The Murder Index
 
 > *"Every cold case has a story waiting to be told. We're here to tell it."*
 
@@ -453,4 +453,4 @@ Before publishing any content, verify:
 
 *"We don't just tell stories. We seek truth. And sometimes, truth is stranger than any story we could tell."*
 
-— The Cold Case Crawler Team
+— The Murder Index Team

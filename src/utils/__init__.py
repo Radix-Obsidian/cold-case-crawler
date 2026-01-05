@@ -1,4 +1,4 @@
-"""Utility modules for Cold Case Crawler."""
+"""Utility modules for Murder Index."""
 
 from src.utils.errors import (
     AgentResponseError,

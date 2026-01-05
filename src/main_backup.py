@@ -12,7 +12,7 @@ from src.models.case import CaseFile, Evidence
 from src.services.debate import create_debate_engine
 from src.services.audio import create_audio_service
 
-app = FastAPI(title="Cold Case Crawler API")
+app = FastAPI(title="Murder Index API")
 
 # CORS
 app.add_middleware(

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Demo script showing what the Cold Case Crawler would generate.
+Demo script showing what the Murder Index would generate.
 This creates a realistic debate script between Maya and Dr. Thorne.
 """
 
@@ -10,7 +10,7 @@ from src.models.script import DialogueLine, PodcastScript
 dialogue_lines = [
     DialogueLine(
         speaker="maya_vance",
-        text="Welcome back to Cold Case Crawler. I'm Maya Vance, and today we're diving into a case that's haunted Minnesota investigators for decades.",
+        text="Welcome back to Murder Index. I'm Maya Vance, and today we're diving into a case that's haunted Minnesota investigators for decades.",
         emotion_tag="excited"
     ),
     DialogueLine(

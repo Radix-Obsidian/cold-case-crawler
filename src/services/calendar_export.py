@@ -1,4 +1,4 @@
-"""Calendar export service for Cold Case Crawler."""
+"""Calendar export service for Murder Index."""
 
 import os
 from datetime import datetime, timedelta
@@ -114,7 +114,7 @@ def export_schedule_to_ics(output_file: str = "murder_index_schedule.ics") -> st
         # Create event
         events.append({
             "uid": episode.episode_id,
-            "title": f"🎙️ Cold Case Crawler: {episode.case_query[:30]}",
+            "title": f"🎙️ Murder Index: {episode.case_query[:30]}",
             "start": start,
             "duration_minutes": 60,
             "description": f"""Episode Generation Day!
@@ -150,7 +150,7 @@ def get_google_calendar_url(episode) -> str:
     start_str = start.strftime("%Y%m%dT%H%M%S")
     end_str = end.strftime("%Y%m%dT%H%M%S")
     
-    title = f"🎙️ Cold Case Crawler: {episode.case_query[:30]}"
+    title = f"🎙️ Murder Index: {episode.case_query[:30]}"
     details = f"Generate episode about: {episode.case_query}"
     
     from urllib.parse import quote

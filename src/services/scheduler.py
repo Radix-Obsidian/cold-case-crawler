@@ -1,4 +1,4 @@
-"""Episode scheduler for Cold Case Crawler."""
+"""Episode scheduler for Murder Index."""
 
 import json
 import os

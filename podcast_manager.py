@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Cold Case Crawler - Podcast Manager CLI
+Murder Index - Podcast Manager CLI
 
 A budget-aware podcast management tool for solo creators.
 Handles scheduling, budget tracking, and episode generation.

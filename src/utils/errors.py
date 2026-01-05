@@ -1,4 +1,4 @@
-"""Custom exception classes for Cold Case Crawler."""
+"""Custom exception classes for Murder Index."""
 
 
 class ColdCaseCrawlerError(Exception):

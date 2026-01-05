@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Create a full Cold Case Crawler episode with AI-generated debate and audio.
+Create a full Murder Index episode with AI-generated debate and audio.
 """
 
 import asyncio

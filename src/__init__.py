@@ -1,1 +1,1 @@
-"""Cold Case Crawler - Autonomous podcast generation system."""
+"""Murder Index - Autonomous podcast generation system."""

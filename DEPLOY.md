@@ -1,4 +1,4 @@
-# Cold Case Crawler - Deployment Guide
+# Murder Index - Deployment Guide
 
 ## Architecture
 
@@ -17,7 +17,7 @@
 
 1. Go to [railway.app](https://railway.app) and sign in
 2. Click "New Project" → "Deploy from GitHub repo"
-3. Select your Cold Case Crawler repo
+3. Select your Murder Index repo
 4. Add environment variables:
    ```
    ANTHROPIC_API_KEY=sk-ant-...

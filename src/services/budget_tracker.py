@@ -1,4 +1,4 @@
-"""Budget tracking service for Cold Case Crawler."""
+"""Budget tracking service for Murder Index."""
 
 import json
 import os

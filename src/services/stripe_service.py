@@ -1,5 +1,5 @@
 """
-Stripe Service for Cold Case Crawler Memberships
+Stripe Service for Murder Index Memberships
 
 Handles subscription management, checkout sessions, and member verification.
 Uses Stripe Checkout Sessions (recommended approach) for payment flows.
@@ -94,7 +94,7 @@ MEMBERSHIP_PLANS: dict[MembershipTier, MembershipPlan] = {
 
 class StripeService:
     """
-    Stripe integration for Cold Case Crawler memberships.
+    Stripe integration for Murder Index memberships.
     
     Uses Checkout Sessions for subscription management (Stripe best practice).
     """
@@ -153,7 +153,7 @@ class StripeService:
                 f"{self.base_url}/products",
                 headers=self._headers,
                 data={
-                    "name": f"Cold Case Crawler - {plan.name}",
+                    "name": f"Murder Index - {plan.name}",
                     "description": ", ".join(plan.features[:3]),
                 },
             )

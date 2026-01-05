@@ -1,4 +1,4 @@
--- Cold Case Crawler Database Schema
+-- Murder Index Database Schema
 -- Run this in your Supabase SQL Editor (https://supabase.com/dashboard)
 
 -- Cases table
