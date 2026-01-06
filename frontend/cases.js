@@ -505,6 +505,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             mediaAttribution.textContent = '';
         }
         
+        // Store current case for analysis generation
+        window.currentModalCase = c;
+        
+        // Reset unlock button state
+        modalUpgrade.textContent = '🔓 Unlock Full Analysis - $9.99/mo';
+        modalUpgrade.disabled = false;
+        
+        // Reset analysis sections to locked state
+        document.getElementById('thorneAnalysis').innerHTML = '<p class="premium-lock">🔒 <strong>Premium Content</strong> - Subscribe to unlock Dr. Thorne\'s forensic analysis, crime scene reconstruction, and investigative insights.</p>';
+        document.getElementById('mayaAnalysis').innerHTML = '<p class="premium-lock">🔒 <strong>Premium Content</strong> - Subscribe to unlock Maya\'s behavioral analysis, offender profiling, and victimology insights.</p>';
+        document.getElementById('indexAnalysis').innerHTML = '<p class="premium-lock">🔒 <strong>Premium Content</strong> - Subscribe to unlock our complete analysis, investigative angles, and modern forensic opportunities.</p>';
+        
         caseModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -602,13 +614,126 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (e.key === 'Escape') closeModal();
     });
     
-    modalUpgrade.addEventListener('click', () => {
-        window.location.href = 'membership.html';
+    modalUpgrade.addEventListener('click', async () => {
+        if (!window.currentModalCase) {
+            window.location.href = 'membership.html';
+            return;
+        }
+        
+        // Check if user is premium (for now, allow demo access)
+        const isPremium = localStorage.getItem('isPremium') === 'true';
+        
+        if (!isPremium) {
+            // Show upgrade prompt with demo option
+            const tryDemo = confirm('Premium analysis requires a subscription ($9.99/mo).\\n\\nClick OK to try a FREE demo analysis for this case, or Cancel to view membership options.');
+            if (!tryDemo) {
+                window.location.href = 'membership.html';
+                return;
+            }
+        }
+        
+        // Generate analysis
+        await generateAndDisplayAnalysis(window.currentModalCase);
     });
     
     modalDownload.addEventListener('click', () => {
         alert('Case summary download feature coming soon! Premium members will be able to download detailed PDF dossiers.');
     });
+    
+    // Analysis generation function
+    async function generateAndDisplayAnalysis(caseData) {
+        const thorneSection = document.getElementById('thorneAnalysis');
+        const mayaSection = document.getElementById('mayaAnalysis');
+        const indexSection = document.getElementById('indexAnalysis');
+        
+        // Show loading state
+        thorneSection.innerHTML = '<p class="analysis-loading">🔬 Dr. Thorne is analyzing the forensic evidence...</p>';
+        mayaSection.innerHTML = '<p class="analysis-loading">🧠 Maya is building a psychological profile...</p>';
+        indexSection.innerHTML = '<p class="analysis-loading">📋 Compiling Murder Index analysis...</p>';
+        
+        try {
+            // First check for cached analysis
+            const cacheResponse = await fetch(`${API_BASE}/analysis/${caseData.case_id}`);
+            let analysis = null;
+            
+            if (cacheResponse.ok) {
+                const cacheData = await cacheResponse.json();
+                if (cacheData.success && cacheData.analysis) {
+                    analysis = cacheData.analysis;
+                    console.log('📋 Loaded cached analysis');
+                }
+            }
+            
+            // If no cache, generate new analysis
+            if (!analysis) {
+                console.log('🤖 Generating new analysis...');
+                const genResponse = await fetch(`${API_BASE}/analysis/generate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ case_data: caseData, force_regenerate: false })
+                });
+                
+                if (!genResponse.ok) {
+                    throw new Error('Analysis generation failed');
+                }
+                
+                const genData = await genResponse.json();
+                if (genData.success) {
+                    analysis = genData.analysis;
+                }
+            }
+            
+            if (analysis) {
+                // Display Thorne's analysis
+                thorneSection.innerHTML = `
+                    <div class="analysis-content-text">
+                        ${formatAnalysisText(analysis.thorne_analysis)}
+                    </div>
+                `;
+                
+                // Display Maya's analysis
+                mayaSection.innerHTML = `
+                    <div class="analysis-content-text">
+                        ${formatAnalysisText(analysis.maya_analysis)}
+                    </div>
+                `;
+                
+                // Display Murder Index summary
+                let indexContent = '';
+                if (analysis.murder_index_summary) {
+                    indexContent += `<p class="index-summary">${escapeHtml(analysis.murder_index_summary)}</p>`;
+                }
+                if (analysis.key_questions && analysis.key_questions.length > 0) {
+                    indexContent += '<h4>Key Unanswered Questions:</h4><ul class="key-questions">';
+                    analysis.key_questions.forEach(q => {
+                        indexContent += `<li>${escapeHtml(q)}</li>`;
+                    });
+                    indexContent += '</ul>';
+                }
+                indexSection.innerHTML = indexContent || '<p>Analysis complete.</p>';
+                
+                // Update button to show unlocked state
+                modalUpgrade.textContent = '✅ Analysis Unlocked';
+                modalUpgrade.disabled = true;
+                
+                console.log('✅ Analysis displayed successfully');
+            } else {
+                throw new Error('No analysis data received');
+            }
+            
+        } catch (error) {
+            console.error('Analysis error:', error);
+            thorneSection.innerHTML = '<p class="analysis-error">⚠️ Analysis temporarily unavailable. Please try again later.</p>';
+            mayaSection.innerHTML = '<p class="analysis-error">⚠️ Analysis temporarily unavailable. Please try again later.</p>';
+            indexSection.innerHTML = '<p class="analysis-error">⚠️ Could not generate analysis at this time.</p>';
+        }
+    }
+    
+    function formatAnalysisText(text) {
+        if (!text) return '<p>Analysis not available.</p>';
+        // Convert newlines to paragraphs and escape HTML
+        return text.split('\\n\\n').map(p => `<p>${escapeHtml(p.trim())}</p>`).join('');
+    }
     
     // Content warning dismiss
     dismissWarning.addEventListener('click', () => {

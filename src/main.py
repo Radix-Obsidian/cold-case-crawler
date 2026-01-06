@@ -160,6 +160,66 @@ async def get_case(case_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# ==================== PREMIUM ANALYSIS ENDPOINTS ====================
+
+class AnalysisRequest(BaseModel):
+    case_data: dict
+    force_regenerate: bool = False
+
+@app.post("/api/analysis/generate")
+async def generate_analysis(request: AnalysisRequest):
+    """
+    Generate AI analysis for a case (premium feature).
+    Returns Thorne's forensic assessment and Maya's psychological profile.
+    """
+    try:
+        from src.services.case_analysis import generate_case_analysis
+        
+        analysis = await generate_case_analysis(
+            request.case_data,
+            force_regenerate=request.force_regenerate
+        )
+        
+        return {
+            "success": True,
+            "analysis": {
+                "case_id": analysis.case_id,
+                "thorne_analysis": analysis.thorne_analysis,
+                "maya_analysis": analysis.maya_analysis,
+                "murder_index_summary": analysis.murder_index_summary,
+                "key_questions": analysis.key_questions,
+                "generated_at": analysis.generated_at
+            }
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Analysis generation failed: {str(e)}")
+
+
+@app.get("/api/analysis/{case_id}")
+async def get_cached_analysis(case_id: str):
+    """Get cached analysis for a case if it exists."""
+    try:
+        from src.services.case_analysis import load_cached_analysis
+        
+        analysis = load_cached_analysis(case_id)
+        if not analysis:
+            return {"success": False, "message": "No cached analysis found", "analysis": None}
+        
+        return {
+            "success": True,
+            "analysis": {
+                "case_id": analysis.case_id,
+                "thorne_analysis": analysis.thorne_analysis,
+                "maya_analysis": analysis.maya_analysis,
+                "murder_index_summary": analysis.murder_index_summary,
+                "key_questions": analysis.key_questions,
+                "generated_at": analysis.generated_at
+            }
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.get("/api/episode")
 async def get_episode(request: Request):
     """Get current episode data with proper audio URL for frontend."""
