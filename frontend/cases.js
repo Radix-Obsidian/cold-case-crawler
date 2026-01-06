@@ -392,8 +392,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             modalEvidenceSection.classList.add('hidden');
         }
         
-        // Source link
-        if (c.source_url) {
+        // Source link - hide if it's just kaggle_homicide (not useful for users)
+        if (c.source_url && c.source !== 'kaggle_homicide') {
             modalSourceLink.href = c.source_url;
             modalSourceLink.classList.remove('hidden');
         } else {
