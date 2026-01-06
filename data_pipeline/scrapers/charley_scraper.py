@@ -11,7 +11,8 @@ from urllib.parse import urljoin
 
 
 CHARLEY_BASE_URL = "https://charleyproject.org"
-CHARLEY_CASES_URL = f"{CHARLEY_BASE_URL}/cases"
+CHARLEY_GEO_URL = f"{CHARLEY_BASE_URL}/case-searches/geographical-cases"
+CHARLEY_ALPHA_URL = f"{CHARLEY_BASE_URL}/case-searches/alphabetical-cases"
 
 
 async def fetch_page(session: aiohttp.ClientSession, url: str) -> Optional[str]:
@@ -27,45 +28,47 @@ async def fetch_page(session: aiohttp.ClientSession, url: str) -> Optional[str]:
     return None
 
 
-async def get_state_urls(session: aiohttp.ClientSession) -> List[str]:
-    """Get all state category URLs from Charley Project."""
-    html = await fetch_page(session, CHARLEY_CASES_URL)
-    if not html:
-        return []
-    
-    soup = BeautifulSoup(html, 'html.parser')
-    state_links = []
-    
-    # Find state links in the cases page
-    for link in soup.find_all('a', href=True):
-        href = link['href']
-        if '/cases/' in href and href != '/cases/':
-            full_url = urljoin(CHARLEY_BASE_URL, href)
-            if full_url not in state_links:
-                state_links.append(full_url)
-    
-    print(f"📍 Found {len(state_links)} state/category pages")
-    return state_links[:10]  # Limit for initial testing
-
-
-async def get_case_urls_from_state(session: aiohttp.ClientSession, state_url: str) -> List[str]:
-    """Get all case URLs from a state page."""
-    html = await fetch_page(session, state_url)
+async def get_case_urls_from_search_page(session: aiohttp.ClientSession, page_url: str) -> List[str]:
+    """Get all case URLs from a search results page."""
+    html = await fetch_page(session, page_url)
     if not html:
         return []
     
     soup = BeautifulSoup(html, 'html.parser')
     case_links = []
     
+    # Find all links that match /case/ pattern
     for link in soup.find_all('a', href=True):
         href = link['href']
-        # Case URLs typically look like /case/firstname-lastname
-        if '/case/' in href:
+        # Case URLs look like /case/firstname-lastname or full URL
+        if '/case/' in href and '/case-searches/' not in href and '/case-updates/' not in href:
             full_url = urljoin(CHARLEY_BASE_URL, href)
-            if full_url not in case_links:
+            if full_url not in case_links and 'charleyproject.org/case/' in full_url:
                 case_links.append(full_url)
     
     return case_links
+
+
+async def get_all_case_urls(session: aiohttp.ClientSession, max_cases: int = 500) -> List[str]:
+    """Collect case URLs from multiple search pages."""
+    all_case_urls = set()
+    
+    # Try geographical cases page first
+    print("📍 Fetching from geographical cases...")
+    geo_cases = await get_case_urls_from_search_page(session, CHARLEY_GEO_URL)
+    all_case_urls.update(geo_cases)
+    print(f"   Found {len(geo_cases)} cases from geographical page")
+    
+    # If we need more, try alphabetical
+    if len(all_case_urls) < max_cases:
+        print("📍 Fetching from alphabetical cases...")
+        alpha_cases = await get_case_urls_from_search_page(session, CHARLEY_ALPHA_URL)
+        all_case_urls.update(alpha_cases)
+        print(f"   Found {len(alpha_cases)} additional from alphabetical page")
+    
+    result = list(all_case_urls)[:max_cases]
+    print(f"📋 Total unique case URLs: {len(result)}")
+    return result
 
 
 async def scrape_case_page(session: aiohttp.ClientSession, url: str) -> Optional[Dict]:
@@ -86,10 +89,30 @@ async def scrape_case_page(session: aiohttp.ClientSession, url: str) -> Optional
     if title:
         case_data['name'] = title.get_text(strip=True)
     
-    # Extract main image
-    img = soup.find('img', class_='case-photo') or soup.find('img', alt=re.compile(r'photo|image', re.I))
-    if img and img.get('src'):
-        case_data['photo_url'] = urljoin(CHARLEY_BASE_URL, img['src'])
+    # Extract photos from the photos div
+    photos_div = soup.find('div', id='photos')
+    if photos_div:
+        photos = []
+        for img in photos_div.find_all('img'):
+            src = img.get('src')
+            if src and 'wp-content/uploads' in src:
+                # Ensure https
+                if src.startswith('http://'):
+                    src = src.replace('http://', 'https://')
+                photos.append(src)
+        if photos:
+            case_data['photo_url'] = photos[0]  # Primary photo
+            case_data['all_photos'] = photos  # All photos
+    
+    # Fallback: try other image patterns
+    if not case_data.get('photo_url'):
+        for img in soup.find_all('img'):
+            src = img.get('src', '')
+            if 'wp-content/uploads' in src and 'pixel.gif' not in src:
+                if src.startswith('http://'):
+                    src = src.replace('http://', 'https://')
+                case_data['photo_url'] = src
+                break
     
     # Extract case details from definition lists or tables
     for dl in soup.find_all('dl'):
@@ -245,24 +268,11 @@ async def scrape_charley_project(
     all_cases = []
     
     async with aiohttp.ClientSession(
-        headers={'User-Agent': 'ColdCaseCrawler/1.0 (Research Project)'}
+        headers={'User-Agent': 'MurderIndex/1.0 (True Crime Research - charleyproject.org permitted use)'}
     ) as session:
         
-        # Get state/category pages
-        state_urls = await get_state_urls(session)
-        
-        # Collect case URLs from each state
-        all_case_urls = []
-        for state_url in state_urls:
-            case_urls = await get_case_urls_from_state(session, state_url)
-            all_case_urls.extend(case_urls)
-            await asyncio.sleep(0.5)  # Rate limiting
-            
-            if len(all_case_urls) >= max_cases:
-                break
-        
-        all_case_urls = list(set(all_case_urls))[:max_cases]
-        print(f"📋 Found {len(all_case_urls)} unique case URLs")
+        # Get all case URLs from search pages
+        all_case_urls = await get_all_case_urls(session, max_cases)
         
         # Scrape each case
         for i, url in enumerate(all_case_urls):

@@ -73,19 +73,45 @@ document.addEventListener('DOMContentLoaded', async () => {
         showLoading(true);
         
         try {
-            // Try API first
-            const response = await fetch(`${API_BASE}/cases?limit=1000`);
-            if (response.ok) {
-                const data = await response.json();
-                cases = data.cases || data;
-                console.log(`📋 Loaded ${cases.length} cases from API`);
+            // Try Charley Project data first (real missing persons with photos)
+            const charleyResponse = await fetch('charley_cases.json');
+            if (charleyResponse.ok) {
+                const charleyData = await charleyResponse.json();
+                const charleyCases = charleyData.cases || [];
+                console.log(`📋 Loaded ${charleyCases.length} real cases from Charley Project`);
+                
+                // Try API for additional cases
+                try {
+                    const apiResponse = await fetch(`${API_BASE}/cases?limit=1000`);
+                    if (apiResponse.ok) {
+                        const apiData = await apiResponse.json();
+                        const apiCases = apiData.cases || apiData || [];
+                        cases = [...charleyCases, ...apiCases];
+                        console.log(`📋 Added ${apiCases.length} cases from API`);
+                    } else {
+                        cases = charleyCases;
+                    }
+                } catch (e) {
+                    cases = charleyCases;
+                }
             } else {
-                throw new Error('API not available');
+                throw new Error('Charley data not available');
             }
         } catch (e) {
-            console.log('⚠️ API not available, loading sample data...');
-            // Load sample/demo data
-            cases = generateSampleCases();
+            console.log('⚠️ Charley data not available, trying API...');
+            try {
+                const response = await fetch(`${API_BASE}/cases?limit=1000`);
+                if (response.ok) {
+                    const data = await response.json();
+                    cases = data.cases || data;
+                    console.log(`📋 Loaded ${cases.length} cases from API`);
+                } else {
+                    throw new Error('API not available');
+                }
+            } catch (e2) {
+                console.log('⚠️ API not available, loading sample data...');
+                cases = generateSampleCases();
+            }
         }
         
         // Extract unique states and years for filters
