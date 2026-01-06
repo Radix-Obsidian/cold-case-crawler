@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="cases.css">
+    <link rel="stylesheet" href="cases-dossier.css">
 </head>
 <body>
     <div class="cases-app">
@@ -118,25 +119,78 @@
                     <p class="modal-meta" id="modalMeta"></p>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-section">
-                        <h4>Summary</h4>
-                        <p id="modalSummary">Loading case details...</p>
+                    <!-- THE BRIEFING -->
+                    <div class="modal-section briefing-section">
+                        <h3 class="section-title">THE BRIEFING</h3>
+                        <p class="section-subtitle">What We Know</p>
+                        
+                        <div class="briefing-grid">
+                            <div class="briefing-item">
+                                <h4>Case Overview</h4>
+                                <p id="modalSummary">Loading case details...</p>
+                            </div>
+                            
+                            <div class="briefing-item" id="modalVictimSection">
+                                <h4>Victim Profile</h4>
+                                <div class="victim-info" id="modalVictim"></div>
+                            </div>
+                            
+                            <div class="briefing-item" id="modalEvidenceSection">
+                                <h4>Physical Evidence</h4>
+                                <div class="evidence-list" id="modalEvidence"></div>
+                            </div>
+                            
+                            <div class="briefing-item" id="modalTimelineSection">
+                                <h4>Timeline</h4>
+                                <div class="timeline-info" id="modalTimeline"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-section" id="modalVictimSection">
-                        <h4>Victim Information</h4>
-                        <div class="victim-info" id="modalVictim"></div>
+
+                    <!-- DR. THORNE'S FORENSIC ASSESSMENT -->
+                    <div class="modal-section analysis-section thorne-section">
+                        <div class="analyst-header">
+                            <div class="analyst-badge thorne-badge">DR. THORNE</div>
+                            <h3 class="section-title">Forensic Assessment</h3>
+                            <p class="section-subtitle">"The Evidence Tells a Story"</p>
+                        </div>
+                        <div class="analysis-content" id="thorneAnalysis">
+                            <p class="premium-lock">🔒 <strong>Premium Content</strong> - Subscribe to unlock Dr. Thorne's forensic analysis, crime scene reconstruction, and investigative insights.</p>
+                        </div>
                     </div>
-                    <div class="modal-section" id="modalEvidenceSection">
-                        <h4>Evidence</h4>
-                        <div class="evidence-list" id="modalEvidence"></div>
+
+                    <!-- MAYA'S PSYCHOLOGICAL PROFILE -->
+                    <div class="modal-section analysis-section maya-section">
+                        <div class="analyst-header">
+                            <div class="analyst-badge maya-badge">MAYA VANCE</div>
+                            <h3 class="section-title">Psychological Profile</h3>
+                            <p class="section-subtitle">"Understanding the Offender"</p>
+                        </div>
+                        <div class="analysis-content" id="mayaAnalysis">
+                            <p class="premium-lock">🔒 <strong>Premium Content</strong> - Subscribe to unlock Maya's behavioral analysis, offender profiling, and victimology insights.</p>
+                        </div>
                     </div>
-                    <div class="modal-section">
-                        <h4>Source</h4>
-                        <p class="modal-source" id="modalSource"></p>
+
+                    <!-- MURDER INDEX ANALYSIS -->
+                    <div class="modal-section analysis-section index-section">
+                        <div class="analyst-header">
+                            <div class="analyst-badge index-badge">MURDER INDEX</div>
+                            <h3 class="section-title">Our Analysis</h3>
+                            <p class="section-subtitle">"Key Questions & Theories"</p>
+                        </div>
+                        <div class="analysis-content" id="indexAnalysis">
+                            <p class="premium-lock">🔒 <strong>Premium Content</strong> - Subscribe to unlock our complete analysis, investigative angles, and modern forensic opportunities.</p>
+                        </div>
+                    </div>
+
+                    <!-- SOURCE ATTRIBUTION -->
+                    <div class="modal-section source-section">
+                        <p class="source-attribution">Data compiled from: <span id="modalSource">Unknown</span></p>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a class="modal-action" id="modalSourceLink" href="#" target="_blank">View Original Source</a>
+                    <button class="modal-action primary-action" id="modalUpgrade">🔓 Unlock Full Analysis - $9.99/mo</button>
+                    <button class="modal-action secondary-action" id="modalDownload">📄 Download Case Summary</button>
                 </div>
             </div>
         </div>

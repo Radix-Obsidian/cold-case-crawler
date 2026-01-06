@@ -1,0 +1,317 @@
+/* ========== ENHANCED CASE DOSSIER STYLES ========== */
+/* Criminal Minds-style case file presentation */
+
+/* Briefing Section */
+.briefing-section {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, transparent 100%);
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+}
+
+.section-subtitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.briefing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.briefing-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.briefing-item h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.briefing-item p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text);
+}
+
+/* Timeline Info */
+.timeline-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.timeline-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    min-width: 80px;
+}
+
+.timeline-event {
+    color: var(--text);
+    line-height: 1.5;
+}
+
+/* Analysis Sections */
+.analysis-section {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.analysis-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.3;
+}
+
+.thorne-section::before {
+    background: linear-gradient(90deg, transparent, var(--thorne), transparent);
+}
+
+.maya-section::before {
+    background: linear-gradient(90deg, transparent, var(--maya), transparent);
+}
+
+.index-section::before {
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.analyst-header {
+    margin-bottom: 1rem;
+}
+
+.analyst-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.thorne-badge {
+    background: rgba(163, 163, 163, 0.15);
+    color: var(--thorne);
+    border: 1px solid rgba(163, 163, 163, 0.3);
+}
+
+.maya-badge {
+    background: rgba(248, 113, 113, 0.15);
+    color: var(--maya);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.index-badge {
+    background: rgba(220, 38, 38, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+.analysis-content {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text);
+}
+
+.analysis-content p {
+    margin-bottom: 1rem;
+}
+
+.analysis-content p:last-child {
+    margin-bottom: 0;
+}
+
+.analysis-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 1rem 0;
+}
+
+.analysis-content li {
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+}
+
+.analysis-content li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+/* Premium Lock */
+.premium-lock {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.08) 0%, rgba(220, 38, 38, 0.02) 100%);
+    border: 1px dashed rgba(220, 38, 38, 0.3);
+    border-radius: 6px;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    text-align: center;
+    justify-content: center;
+}
+
+.premium-lock strong {
+    color: var(--accent);
+}
+
+/* Source Section */
+.source-section {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.source-attribution {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-align: center;
+}
+
+.source-attribution span {
+    color: var(--text);
+}
+
+/* Modal Footer Actions */
+.modal-footer {
+    padding: 1rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.modal-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.primary-action {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+.primary-action:hover {
+    background: var(--accent-light);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+    transform: translateY(-1px);
+}
+
+.secondary-action {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.secondary-action:hover {
+    background: var(--surface);
+    border-color: var(--accent);
+}
+
+/* Modal Content Adjustments */
+.modal-content {
+    max-width: 900px;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .briefing-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .analysis-section {
+        padding: 1rem;
+    }
+    
+    .modal-footer {
+        flex-direction: column;
+    }
+    
+    .modal-action {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .briefing-section {
+        padding: 1rem;
+    }
+    
+    .section-title {
+        font-size: 0.95rem;
+    }
+    
+    .section-subtitle {
+        font-size: 0.7rem;
+    }
+}

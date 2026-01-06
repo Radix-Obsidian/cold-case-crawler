@@ -35,10 +35,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const modalSummary = document.getElementById('modalSummary');
     const modalVictim = document.getElementById('modalVictim');
     const modalEvidence = document.getElementById('modalEvidence');
+    const modalTimeline = document.getElementById('modalTimeline');
     const modalSource = document.getElementById('modalSource');
-    const modalSourceLink = document.getElementById('modalSourceLink');
     const modalVictimSection = document.getElementById('modalVictimSection');
     const modalEvidenceSection = document.getElementById('modalEvidenceSection');
+    const modalTimelineSection = document.getElementById('modalTimelineSection');
+    const modalUpgrade = document.getElementById('modalUpgrade');
+    const modalDownload = document.getElementById('modalDownload');
     
     // State
     let cases = [];
@@ -392,12 +395,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             modalEvidenceSection.classList.add('hidden');
         }
         
-        // Source link - hide if it's just kaggle_homicide (not useful for users)
-        if (c.source_url && c.source !== 'kaggle_homicide') {
-            modalSourceLink.href = c.source_url;
-            modalSourceLink.classList.remove('hidden');
+        // Timeline
+        if (c.date_occurred) {
+            modalTimelineSection.classList.remove('hidden');
+            const timelineItems = [];
+            
+            if (c.date_occurred) {
+                timelineItems.push(`
+                    <div class="timeline-item">
+                        <span class="timeline-date">${formatDate(c.date_occurred)}</span>
+                        <span class="timeline-event">Incident Occurred</span>
+                    </div>
+                `);
+            }
+            
+            if (c.date_discovered && c.date_discovered !== c.date_occurred) {
+                timelineItems.push(`
+                    <div class="timeline-item">
+                        <span class="timeline-date">${formatDate(c.date_discovered)}</span>
+                        <span class="timeline-event">Case Discovered</span>
+                    </div>
+                `);
+            }
+            
+            modalTimeline.innerHTML = timelineItems.join('');
         } else {
-            modalSourceLink.classList.add('hidden');
+            modalTimelineSection.classList.add('hidden');
         }
         
         caseModal.classList.add('active');
@@ -464,6 +487,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     modalBackdrop.addEventListener('click', closeModal);
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeModal();
+    });
+    
+    modalUpgrade.addEventListener('click', () => {
+        window.location.href = 'membership.html';
+    });
+    
+    modalDownload.addEventListener('click', () => {
+        alert('Case summary download feature coming soon! Premium members will be able to download detailed PDF dossiers.');
     });
     
     // ========== INITIALIZE ==========
