@@ -46,7 +46,7 @@
 }
 
 .site-logo {
-    height: 42px;
+    height: 56px;
     width: auto;
     filter: brightness(1) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
     transition: transform 0.2s ease, filter 0.2s ease;
@@ -1105,7 +1105,7 @@ body {
     }
     
     .site-logo {
-        height: 28px;
+        height: 40px;
     }
     
     /* Hide nav text, show icons only or hide completely */
