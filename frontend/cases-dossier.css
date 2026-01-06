@@ -1,6 +1,181 @@
 /* ========== ENHANCED CASE DOSSIER STYLES ========== */
 /* Criminal Minds-style case file presentation */
 
+/* Content Warning */
+.content-warning {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.4);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.content-warning.dismissed {
+    display: none;
+}
+
+.warning-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.warning-text {
+    margin-bottom: 1.5rem;
+}
+
+.warning-text strong {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.warning-text p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 400px;
+}
+
+.warning-dismiss {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.warning-dismiss:hover {
+    background: var(--accent-light);
+    transform: translateY(-1px);
+}
+
+/* Case Media Gallery */
+.media-section {
+    margin-bottom: 2rem;
+}
+
+.media-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.media-item {
+    position: relative;
+    aspect-ratio: 4/3;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+}
+
+.media-item:hover {
+    border-color: var(--accent);
+    transform: scale(1.02);
+}
+
+.media-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.media-item-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.5rem;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    font-size: 0.7rem;
+    color: var(--text-dim);
+}
+
+.media-placeholder {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--bg);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    color: var(--text-dim);
+}
+
+.media-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.5;
+}
+
+.media-placeholder p {
+    font-size: 0.85rem;
+}
+
+.media-attribution {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-top: 0.75rem;
+    font-style: italic;
+}
+
+/* Case Quality Badge */
+.case-quality-badge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-family: 'Space Mono', monospace;
+}
+
+.quality-high {
+    color: var(--gold);
+}
+
+.quality-medium {
+    color: var(--text);
+}
+
+.quality-low {
+    color: var(--text-dim);
+}
+
+/* Featured Case Indicator */
+.featured-badge {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    background: var(--gold);
+    color: #000;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
 /* Briefing Section */
 .briefing-section {
     background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, transparent 100%);

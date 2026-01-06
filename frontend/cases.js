@@ -43,6 +43,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const modalUpgrade = document.getElementById('modalUpgrade');
     const modalDownload = document.getElementById('modalDownload');
     
+    // Content warning & media elements
+    const contentWarning = document.getElementById('contentWarning');
+    const dismissWarning = document.getElementById('dismissWarning');
+    const mediaSection = document.getElementById('mediaSection');
+    const mediaGallery = document.getElementById('mediaGallery');
+    const mediaAttribution = document.getElementById('mediaAttribution');
+    
+    // Track if user has dismissed warning this session
+    let warningDismissed = sessionStorage.getItem('warningDismissed') === 'true';
+    
     // State
     let cases = [];
     let filteredCases = [];
@@ -261,6 +271,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             return true;
         });
         
+        // Sort by quality score (best cases first)
+        filteredCases.sort((a, b) => {
+            const scoreA = getCaseQualityScore(a);
+            const scoreB = getCaseQualityScore(b);
+            return scoreB - scoreA;
+        });
+        
         // Reset to page 1
         currentPage = 1;
         renderCases();
@@ -320,8 +337,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         const date = c.date_occurred ? formatDate(c.date_occurred) : 'Date Unknown';
         const location = [c.city, c.state].filter(Boolean).join(', ') || 'Unknown Location';
         
+        // Calculate quality score
+        const qualityScore = getCaseQualityScore(c);
+        const quality = getCaseQualityLabel(qualityScore);
+        const hasMedia = c.media && c.media.length > 0;
+        const isFeatured = c.featured || qualityScore >= 60;
+        
         return `
             <div class="case-card" data-id="${c.id || c.case_id}">
+                ${isFeatured ? '<span class="featured-badge">FEATURED</span>' : ''}
+                <div class="case-quality-badge ${quality.class}">
+                    ${hasMedia ? '📷 ' : ''}${quality.label}
+                </div>
                 <div class="case-card-header">
                     <span class="case-type-badge ${typeClass}">${typeLabel}</span>
                     <span class="case-status">${c.status === 'unsolved' ? 'UNSOLVED' : c.status?.toUpperCase()}</span>
@@ -423,8 +450,68 @@ document.addEventListener('DOMContentLoaded', async () => {
             modalTimelineSection.classList.add('hidden');
         }
         
+        // Content Warning
+        if (warningDismissed) {
+            contentWarning.classList.add('dismissed');
+        } else {
+            contentWarning.classList.remove('dismissed');
+        }
+        
+        // Media Gallery
+        if (c.media && c.media.length > 0) {
+            mediaSection.classList.remove('hidden');
+            mediaGallery.innerHTML = c.media.map(m => `
+                <div class="media-item" onclick="window.open('${escapeHtml(m.url)}', '_blank')">
+                    <img src="${escapeHtml(m.thumbnail || m.url)}" alt="${escapeHtml(m.caption || 'Case media')}" loading="lazy">
+                    <div class="media-item-overlay">${escapeHtml(m.caption || m.type)}</div>
+                </div>
+            `).join('');
+            mediaAttribution.textContent = c.media_attribution || '';
+        } else {
+            // Show placeholder for cases without media
+            mediaSection.classList.remove('hidden');
+            mediaGallery.innerHTML = `
+                <div class="media-placeholder">
+                    <span class="media-icon">📷</span>
+                    <p>No official case media available</p>
+                </div>
+            `;
+            mediaAttribution.textContent = '';
+        }
+        
         caseModal.classList.add('active');
         document.body.style.overflow = 'hidden';
+    }
+    
+    // Calculate case quality score based on available evidence
+    function getCaseQualityScore(c) {
+        let score = 0;
+        
+        // Has media (+30)
+        if (c.media && c.media.length > 0) score += 30;
+        
+        // Has evidence items (+5 each, max 25)
+        if (c.evidence) score += Math.min(c.evidence.length * 5, 25);
+        
+        // Has victim info (+15)
+        if (c.victim && Object.keys(c.victim).length > 2) score += 15;
+        
+        // Has detailed summary (+10)
+        if (c.summary && c.summary.length > 200) score += 10;
+        
+        // Has specific date (+5)
+        if (c.date_occurred) score += 5;
+        
+        // Has AI analysis generated (+15)
+        if (c.thorne_analysis || c.maya_analysis) score += 15;
+        
+        return score;
+    }
+    
+    function getCaseQualityLabel(score) {
+        if (score >= 60) return { label: 'DETAILED', class: 'quality-high' };
+        if (score >= 30) return { label: 'STANDARD', class: 'quality-medium' };
+        return { label: 'BASIC', class: 'quality-low' };
     }
     
     function closeModal() {
@@ -495,6 +582,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     modalDownload.addEventListener('click', () => {
         alert('Case summary download feature coming soon! Premium members will be able to download detailed PDF dossiers.');
+    });
+    
+    // Content warning dismiss
+    dismissWarning.addEventListener('click', () => {
+        warningDismissed = true;
+        sessionStorage.setItem('warningDismissed', 'true');
+        contentWarning.classList.add('dismissed');
     });
     
     // ========== INITIALIZE ==========

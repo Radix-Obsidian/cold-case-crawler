@@ -315,10 +315,53 @@
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 1.25rem;
+    padding-top: 2.5rem;
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
+}
+
+.case-card .featured-badge {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    background: var(--gold);
+    color: #000;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    z-index: 1;
+}
+
+.case-card .case-quality-badge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
+    font-size: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    z-index: 1;
+}
+
+.case-card .quality-high {
+    color: var(--gold);
+}
+
+.case-card .quality-medium {
+    color: var(--text);
+}
+
+.case-card .quality-low {
+    color: var(--text-dim);
 }
 
 .case-card::before {
