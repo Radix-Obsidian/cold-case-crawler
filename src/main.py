@@ -220,6 +220,95 @@ async def get_cached_analysis(case_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# ==================== AUTOMATION ENDPOINTS ====================
+
+@app.post("/api/automation/run-weekly")
+async def run_weekly_automation(background_tasks: BackgroundTasks, force: bool = False):
+    """
+    Trigger weekly content automation pipeline.
+    Generates case-of-the-week, analysis, social posts, and newsletter.
+    """
+    async def run_pipeline():
+        try:
+            from src.services.content_automation import run_weekly_pipeline
+            await run_weekly_pipeline(force_regenerate=force)
+        except Exception as e:
+            print(f"Automation failed: {e}")
+    
+    background_tasks.add_task(lambda: asyncio.create_task(run_pipeline()))
+    
+    return {
+        "status": "started",
+        "message": "Weekly automation pipeline started. Check /api/automation/status for progress."
+    }
+
+
+@app.get("/api/automation/status")
+async def get_automation_status():
+    """Get current week's automation status and content."""
+    try:
+        from src.services.content_automation import get_weekly_content, get_week_id, list_generated_weeks
+        
+        week_id = get_week_id()
+        content = get_weekly_content(week_id)
+        
+        if not content:
+            return {
+                "week_id": week_id,
+                "status": "not_started",
+                "content": None,
+                "all_weeks": list_generated_weeks()
+            }
+        
+        return {
+            "week_id": week_id,
+            "status": content.status,
+            "case_title": content.case_title,
+            "case_id": content.case_id,
+            "has_analysis": bool(content.thorne_analysis),
+            "has_social": bool(content.twitter_post),
+            "has_newsletter": bool(content.newsletter_subject),
+            "created_at": content.created_at,
+            "completed_at": content.completed_at,
+            "all_weeks": list_generated_weeks()
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/automation/content/{week_id}")
+async def get_week_content(week_id: str):
+    """Get full content for a specific week."""
+    try:
+        from src.services.content_automation import get_weekly_content
+        
+        content = get_weekly_content(week_id)
+        if not content:
+            raise HTTPException(status_code=404, detail=f"No content for week {week_id}")
+        
+        return {
+            "week_id": content.week_id,
+            "case_title": content.case_title,
+            "case_id": content.case_id,
+            "status": content.status,
+            "thorne_analysis": content.thorne_analysis,
+            "maya_analysis": content.maya_analysis,
+            "murder_index_summary": content.murder_index_summary,
+            "key_questions": content.key_questions,
+            "twitter_post": content.twitter_post,
+            "instagram_caption": content.instagram_caption,
+            "facebook_post": content.facebook_post,
+            "newsletter_subject": content.newsletter_subject,
+            "newsletter_body": content.newsletter_body,
+            "created_at": content.created_at,
+            "completed_at": content.completed_at
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.get("/api/episode")
 async def get_episode(request: Request):
     """Get current episode data with proper audio URL for frontend."""
