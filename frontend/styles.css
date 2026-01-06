@@ -46,9 +46,9 @@
 }
 
 .site-logo {
-    height: 36px;
+    height: 42px;
     width: auto;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+    filter: brightness(1) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
     transition: transform 0.2s ease, filter 0.2s ease;
 }
 
